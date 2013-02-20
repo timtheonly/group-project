@@ -149,4 +149,4 @@ $RECYCLE.BIN/
 .DS_Store
 
 #staruml temp file
-design/*.~uml
+design/*.~ml
