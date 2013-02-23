@@ -34,8 +34,14 @@ namespace thegame
 
         public override void Update(GameTime gameTime)
         {
+            //game state needed for testing should be removed when working on AI
             GamePadState currentState = GamePad.GetState(PlayerIndex.One);
-            world = Matrix.CreateTranslation(pos);
+
+            float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            spin += timeDelta;
+            world = Matrix.CreateScale(1.0f, 1.0f, 25.0f) * Matrix.CreateRotationY(spin);
+
+            
         }
 
         public override void Draw(GameTime gameTime)

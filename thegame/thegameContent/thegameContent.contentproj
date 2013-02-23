@@ -57,18 +57,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="models\Tank.x">
-      <Name>Tank</Name>
-      <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="models\Tank1.fbx">
-      <Name>Tank1</Name>
+    <Compile Include="models\tank.fbx">
+      <Name>tank</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
