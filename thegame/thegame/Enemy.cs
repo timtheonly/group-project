@@ -37,8 +37,8 @@ namespace thegame
             //game state needed for testing should be removed when working on AI
             GamePadState currentState = GamePad.GetState(PlayerIndex.One);
 
-            float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            spin += timeDelta;
+            //float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //spin += timeDelta;
             world = Matrix.CreateScale(1.0f, 1.0f, 25.0f) * Matrix.CreateRotationY(spin);
 
             

@@ -53,26 +53,27 @@ namespace thegame
         public override void Update(GameTime gameTime)
         {
             GamePadState currentState = GamePad.GetState(PlayerIndex.One);
+            KeyboardState keyState = Keyboard.GetState();
 
             // move camera left and right
-            if (currentState.ThumbSticks.Right.X < 0)
+            if (currentState.ThumbSticks.Right.X < 0 || keyState.IsKeyDown(Keys.Left))
             {
                 pos -= Vector3.Cross(up, right) * speed;
             }
 
-            if (currentState.ThumbSticks.Right.X > 0)
+            if (currentState.ThumbSticks.Right.X > 0 || keyState.IsKeyDown(Keys.Right))
             {
                 pos += Vector3.Cross(up, right) * speed;
 
             }
 
             //move camera forward and back
-            if (currentState.ThumbSticks.Right.Y > 0)
+            if (currentState.ThumbSticks.Right.Y > 0 || keyState.IsKeyDown(Keys.Up))
             {
                 pos -= right * speed;
             }
 
-            if (currentState.ThumbSticks.Right.Y < 0)
+            if (currentState.ThumbSticks.Right.Y < 0 || keyState.IsKeyDown(Keys.Down))
             {
                 pos += right * speed;
             }
