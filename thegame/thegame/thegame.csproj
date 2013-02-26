@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bullet.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="GameEntity.cs" />
     <Compile Include="MoveableEntity.cs" />

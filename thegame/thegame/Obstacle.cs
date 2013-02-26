@@ -1,5 +1,7 @@
 ﻿/*
  * obstacle: class for all obsticales
+ * 
+ * static so no need for movement
  */
 using System;
 using System.Collections.Generic;

@@ -60,7 +60,7 @@ namespace thegame
         {
             // TODO: Add your initialization logic here
             plyr = new Player(new Vector3(0,0,50));
-            enemy = new Enemy(new Vector3(0, 0, 20));
+            enemy = new Enemy(new Vector3(0, 0, -10));
 
             base.Initialize();
         }
