@@ -19,6 +19,7 @@ namespace thegame
     {
         protected Vector3 pos;
         protected Model model;
+        protected Matrix world;
         
         public virtual void LoadContent()
         {

@@ -21,6 +21,7 @@ namespace thegame
         protected Vector3 modelVelocity, up,right, look;
         protected float spin;
         protected bool alive;
+        
         public MoveableEntity()
         {
             right = new Vector3(0, 0, 1);

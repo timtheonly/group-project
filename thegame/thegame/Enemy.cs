@@ -20,11 +20,11 @@ namespace thegame
 {
     class Enemy : MoveableEntity
     {
-        Matrix world;
+        
         public Enemy(Vector3 pos)
         {
             this.pos = pos;
-            
+            //spin = MathHelper.ToRadians(90);
         }
 
         public override void LoadContent()
@@ -38,11 +38,11 @@ namespace thegame
             GamePadState currentState = GamePad.GetState(PlayerIndex.One);
 
             //uncomment the following and the model will spin::
-            //float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //spin += timeDelta;
+            float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            spin += timeDelta;
 
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(1.0f, 1.0f, 25.0f) * Matrix.CreateRotationY(spin) *Matrix.CreateTranslation(pos);
+            world = Matrix.CreateScale(1.0f, 1.0f, 1.0f) * Matrix.CreateRotationY(spin) *Matrix.CreateTranslation(pos);
 
             
         }

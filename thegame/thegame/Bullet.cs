@@ -20,27 +20,43 @@ namespace thegame
              return creator;
          }
 
-         public Bullet(MoveableEntity creator)
+         public Bullet(MoveableEntity creator, Vector3 pos)
          {
                  if (creator is Bullet)
                  {
                      throw new BulletException();
                  }
                  this.creator = creator;
+                 this.pos = pos;
         }
 
          public override void LoadContent()
          {
+             model = Game1.getInstance().Content.Load<Model>("models\\Bullet");
              base.LoadContent();
          }
 
          public override void Update(GameTime gameTime)
          {
+             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
+             world = Matrix.CreateScale(1.0f, 1.0f, 1.0f) * Matrix.CreateRotationY(spin) * Matrix.CreateTranslation(pos);
              base.Update(gameTime);
          }
 
          public override void Draw(GameTime gameTime)
          {
+             //boiler plate code same for drawing all models
+             foreach (ModelMesh mesh in model.Meshes)
+             {
+                 foreach (BasicEffect effect in mesh.Effects)
+                 {
+                     effect.EnableDefaultLighting();
+                     effect.World = world;
+                     effect.Projection = Game1.getInstance().getPlayer().getProjection();
+                     effect.View = Game1.getInstance().getPlayer().getView();
+                 }
+                 mesh.Draw();
+             }
              base.Draw(gameTime);
          }
         
