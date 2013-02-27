@@ -47,7 +47,7 @@ namespace thegame
 
         public override void LoadContent()
         {
-            layer = Game1.getInstance().Content.Load<Texture2D>("textures\\untitled");
+            layer = Game1.getInstance().Content.Load<Texture2D>("textures\\3");
         }
 
         public override void Update(GameTime gameTime)
