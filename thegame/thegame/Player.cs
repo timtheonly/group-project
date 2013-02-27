@@ -42,12 +42,12 @@ namespace thegame
         public Player(Vector3 pos)
         {
             this.pos = pos;
-            speed = 0.5f;
+            speed = 0.2f;
         }
 
         public override void LoadContent()
         {
-            layer = Game1.getInstance().Content.Load<Texture2D>("textures\\3");
+            layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
         }
 
         public override void Update(GameTime gameTime)
@@ -76,6 +76,13 @@ namespace thegame
             if (currentState.ThumbSticks.Right.Y < 0 || keyState.IsKeyDown(Keys.Down))
             {
                 pos += right * speed;
+            }
+            if (keyState.IsKeyDown(Keys.Space))
+            {
+                //add offset to the bullet vector3 to center it in the crosshairs
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f));
+                tempBullet.LoadContent();
+                Game1.getInstance().bullets.Add(tempBullet);
             }
             view = Matrix.CreateLookAt(pos, pos + look, up);
             //projection is the view space, anything out of this range is not drawn

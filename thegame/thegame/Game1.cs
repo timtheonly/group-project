@@ -34,7 +34,9 @@ namespace thegame
             return plyr;
         }
 
-        private Enemy enemy;
+        //private Enemy enemy;
+
+        public List<Bullet> bullets;
 
         private static Game1 instance;
         public  static Game1 getInstance()
@@ -59,8 +61,9 @@ namespace thegame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            bullets = new List<Bullet>();
             plyr = new Player(new Vector3(0,0,50));
-            enemy = new Enemy(new Vector3(0, 0, -10));
+            //enemy = new Enemy(new Vector3(0, 0, -10));
 
             base.Initialize();
         }
@@ -73,7 +76,11 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            enemy.LoadContent();
+            //enemy.LoadContent();
+            foreach(Bullet bullet in bullets)
+            {
+                bullet.LoadContent();
+            }
             plyr.LoadContent();
             // TODO: use this.Content to load your game content here
         }
@@ -97,9 +104,13 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            enemy.Update(gameTime);
+            //enemy.Update(gameTime);
             // TODO: Add your update logic here
             plyr.Update(gameTime);
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Update(gameTime);
+            }
             base.Update(gameTime);
         }
 
@@ -112,7 +123,11 @@ namespace thegame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            enemy.Draw(gameTime);
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Draw(gameTime);
+            }
+            //enemy.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             spriteBatch.End();

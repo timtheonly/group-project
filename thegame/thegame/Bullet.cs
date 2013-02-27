@@ -28,6 +28,7 @@ namespace thegame
                  }
                  this.creator = creator;
                  this.pos = pos;
+                 spin = MathHelper.ToRadians(180);
         }
 
          public override void LoadContent()
@@ -38,8 +39,9 @@ namespace thegame
 
          public override void Update(GameTime gameTime)
          {
+             pos.Z -= 0.1f;
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-             world = Matrix.CreateScale(1.0f, 1.0f, 1.0f) * Matrix.CreateRotationY(spin) * Matrix.CreateTranslation(pos);
+             world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spin) * Matrix.CreateTranslation(pos);
              base.Update(gameTime);
          }
 

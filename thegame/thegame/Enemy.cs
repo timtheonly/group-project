@@ -42,7 +42,7 @@ namespace thegame
             spin += timeDelta;
 
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(1.0f, 1.0f, 1.0f) * Matrix.CreateRotationY(spin) *Matrix.CreateTranslation(pos);
+            world = Matrix.CreateScale(1.0f, 1.0f, 15.0f) * Matrix.CreateRotationY(spin) *Matrix.CreateTranslation(pos);
 
             
         }
