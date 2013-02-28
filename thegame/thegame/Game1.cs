@@ -34,7 +34,7 @@ namespace thegame
             return plyr;
         }
 
-        //private Enemy enemy;
+        private Enemy enemy;
 
         public List<Bullet> bullets;
 
@@ -63,7 +63,7 @@ namespace thegame
             // TODO: Add your initialization logic here
             bullets = new List<Bullet>();
             plyr = new Player(new Vector3(0,0,50));
-            //enemy = new Enemy(new Vector3(0, 0, -10));
+            enemy = new Enemy(new Vector3(0, 0, -10));
 
             base.Initialize();
         }
@@ -76,7 +76,7 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //enemy.LoadContent();
+            enemy.LoadContent();
             foreach(Bullet bullet in bullets)
             {
                 bullet.LoadContent();
@@ -104,7 +104,7 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            //enemy.Update(gameTime);
+            enemy.Update(gameTime);
             // TODO: Add your update logic here
             plyr.Update(gameTime);
             for (int i = 0; i < bullets.Count;i++ )
@@ -134,7 +134,7 @@ namespace thegame
             {
                 bullet.Draw(gameTime);
             }
-            //enemy.Draw(gameTime);
+            enemy.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             spriteBatch.End();

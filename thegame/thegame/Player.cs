@@ -79,7 +79,7 @@ namespace thegame
                 pos += right * speed;
             }
             
-            
+            // limit the amount of bullets that can be spawned with last shot
             if ((currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
             {
                 //add offset to the bullet vector3 to center it in the crosshairs

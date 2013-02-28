@@ -51,18 +51,6 @@ namespace thegame
 
          public override void Draw(GameTime gameTime)
          {
-             //boiler plate code same for drawing all models
-             foreach (ModelMesh mesh in model.Meshes)
-             {
-                 foreach (BasicEffect effect in mesh.Effects)
-                 {
-                     effect.EnableDefaultLighting();
-                     effect.World = world;
-                     effect.Projection = Game1.getInstance().getPlayer().getProjection();
-                     effect.View = Game1.getInstance().getPlayer().getView();
-                 }
-                 mesh.Draw();
-             }
              base.Draw(gameTime);
          }
         
