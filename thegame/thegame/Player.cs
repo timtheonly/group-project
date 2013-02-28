@@ -22,7 +22,8 @@ namespace thegame
     {
 
         float speed;
-
+        //shot limiter
+        float lastShot = 0;
         //overlay for targeting system, health and radar
         Texture2D layer; 
         
@@ -77,14 +78,17 @@ namespace thegame
             {
                 pos += right * speed;
             }
-
-            if (currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space))
+            
+            
+            if ((currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
             {
                 //add offset to the bullet vector3 to center it in the crosshairs
                 Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f));
                 tempBullet.LoadContent();
                 Game1.getInstance().bullets.Add(tempBullet);
+                lastShot = 0;
             }
+            lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
             view = Matrix.CreateLookAt(pos, pos + look, up);
             //projection is the view space, anything out of this range is not drawn
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), Game1.getInstance().getGraphics().GraphicsDevice.Viewport.AspectRatio, 1.0f, 100.0f);
