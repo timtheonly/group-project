@@ -16,6 +16,7 @@ namespace thegame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.None, FillMode = FillMode.WireFrame };
         private GraphicsDeviceManager graphics;
         public GraphicsDeviceManager getGraphics()
         {
@@ -33,6 +34,13 @@ namespace thegame
         {
             return plyr;
         }
+
+        protected Explosion boom;
+        public Explosion getExplosion()
+        {
+            return boom;
+        }
+
 
         private Enemy enemy;
 
@@ -64,6 +72,8 @@ namespace thegame
             bullets = new List<Bullet>();
             plyr = new Player(new Vector3(0,0,50));
             enemy = new Enemy(new Vector3(0, 0, -10));
+            //boom = new Explosion(new Vector3(0,0,-10));
+
 
             base.Initialize();
         }
@@ -128,6 +138,8 @@ namespace thegame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            //GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
+            //GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here
             foreach (Bullet bullet in bullets)
@@ -137,7 +149,9 @@ namespace thegame
             enemy.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
+            //boom.Draw(gameTime);
             spriteBatch.End();
+         
            
             base.Draw(gameTime);
         }

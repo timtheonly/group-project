@@ -11,8 +11,12 @@ using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
-    class Explosion:MoveableEntity
+    public class Explosion:MoveableEntity
     {
+        public Explosion(Vector3 pos)
+        {
+            this.pos = pos;
+        }
 
         public override void LoadContent()
         {
@@ -20,8 +24,8 @@ namespace thegame
 
         public override void Update(GameTime gameTime)
         {
-            float width = 0;
-            float height = 0;
+            float width = 2;
+            float height = 2;
             float speed = 50.0f;
             float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -35,6 +39,8 @@ namespace thegame
         public override void Draw(GameTime gameTime)
         {
             Line.DrawLine(pos, pos + look * 5, Color.Green);
+            //Line.DrawLine(pos, pos + look * 5, Color.Green);
+            //Line.DrawLine(pos, pos + look * 5, Color.Green);
         }
     }
 }
