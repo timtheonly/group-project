@@ -40,6 +40,10 @@ namespace thegame
          public override void Update(GameTime gameTime)
          {
              pos.Z -= 0.1f;
+             if (pos.Z < 0)
+             {
+                 alive = false;
+             }
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
              world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spin) * Matrix.CreateTranslation(pos);
              base.Update(gameTime);

@@ -107,9 +107,16 @@ namespace thegame
             //enemy.Update(gameTime);
             // TODO: Add your update logic here
             plyr.Update(gameTime);
-            foreach (Bullet bullet in bullets)
+            for (int i = 0; i < bullets.Count;i++ )
             {
-                bullet.Update(gameTime);
+                if (bullets[i].isAlive())
+                {
+                    bullets[i].Update(gameTime);
+                }
+                else
+                {
+                    bullets.RemoveAt(i);
+                }
             }
             base.Update(gameTime);
         }

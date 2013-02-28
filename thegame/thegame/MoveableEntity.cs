@@ -28,6 +28,7 @@ namespace thegame
             up = new Vector3(0, 1, 0);
             look = new Vector3(0, 0, -1);
             spin = 0.0f;
+            alive = true;
         }
 
         public bool isAlive()
