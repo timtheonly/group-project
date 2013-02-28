@@ -39,7 +39,7 @@ namespace thegame
 
          public override void Update(GameTime gameTime)
          {
-             pos.Z -= 0.1f;
+             pos.Z -= 0.6f;
              if (pos.Z < 0)
              {
                  alive = false;

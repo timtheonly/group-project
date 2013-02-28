@@ -16,6 +16,7 @@ namespace thegame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.None, FillMode = FillMode.WireFrame };
         private GraphicsDeviceManager graphics;
         public GraphicsDeviceManager getGraphics()
         {
@@ -34,7 +35,13 @@ namespace thegame
             return plyr;
         }
 
-        //private Enemy enemy;
+        protected Explosion boom;
+        public Explosion getExplosion()
+        {
+            return boom;
+        }
+
+        private Enemy enemy;
 
         public List<Bullet> bullets;
 
@@ -63,7 +70,8 @@ namespace thegame
             // TODO: Add your initialization logic here
             bullets = new List<Bullet>();
             plyr = new Player(new Vector3(0,0,50));
-            //enemy = new Enemy(new Vector3(0, 0, -10));
+            enemy = new Enemy(new Vector3(0, 0, -10));
+            //boom = new Explosion(new Vector3(0,0,-10));
 
             base.Initialize();
         }
@@ -76,7 +84,7 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //enemy.LoadContent();
+            enemy.LoadContent();
             foreach(Bullet bullet in bullets)
             {
                 bullet.LoadContent();
@@ -104,7 +112,7 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            //enemy.Update(gameTime);
+            enemy.Update(gameTime);
             // TODO: Add your update logic here
             plyr.Update(gameTime);
             for (int i = 0; i < bullets.Count;i++ )
@@ -128,16 +136,20 @@ namespace thegame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            //GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
+            //GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here
             foreach (Bullet bullet in bullets)
             {
                 bullet.Draw(gameTime);
             }
-            //enemy.Draw(gameTime);
+            enemy.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
+            //boom.Draw(gameTime);
             spriteBatch.End();
+         
            
             base.Draw(gameTime);
         }
