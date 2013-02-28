@@ -44,7 +44,13 @@ namespace thegame
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
             world = Matrix.CreateScale(1.0f, 1.0f, 15.0f) * Matrix.CreateRotationY(spin) *Matrix.CreateTranslation(pos);
 
-            
+            foreach (Bullet bullet in Game1.getInstance().bullets)
+            {
+                if (collidesWith(bullet.getModel(), bullet.getWorld()))
+                {
+                    alive = false;
+                }
+            }
         }
         
         public override void Draw(GameTime gameTime)

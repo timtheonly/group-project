@@ -114,7 +114,10 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            enemy.Update(gameTime);
+            if (enemy.isAlive())
+            {
+                enemy.Update(gameTime);
+            }
             // TODO: Add your update logic here
             plyr.Update(gameTime);
             for (int i = 0; i < bullets.Count;i++ )
@@ -146,7 +149,10 @@ namespace thegame
             {
                 bullet.Draw(gameTime);
             }
-            enemy.Draw(gameTime);
+            if (enemy.isAlive())
+            {
+                enemy.Draw(gameTime);
+            }
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             //boom.Draw(gameTime);

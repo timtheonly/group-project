@@ -19,13 +19,37 @@ namespace thegame
     {
         protected Vector3 pos;
         protected Model model;
+        public Model getModel()
+        {
+            return model;
+        }
+
         protected Matrix world;
+        public Matrix getWorld()
+        {
+            return world;
+        }
         
         public virtual void LoadContent()
         {
         }
         public virtual void Update(GameTime gameTime)
         {
+        }
+
+        public bool collidesWith(Model otherModel,Matrix otherWorld)
+        {
+            foreach(ModelMesh mesh in model.Meshes)
+            {
+                foreach(ModelMesh otherMesh in otherModel.Meshes)
+                {
+                    if(mesh.BoundingSphere.Transform(world).Intersects(otherMesh.BoundingSphere.Transform(otherWorld)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;            
         }
         public virtual void Draw(GameTime gameTime)
         {
