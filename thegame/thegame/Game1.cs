@@ -41,6 +41,7 @@ namespace thegame
             return boom;
         }
 
+
         private Enemy enemy;
 
         public List<Bullet> bullets;
@@ -72,6 +73,7 @@ namespace thegame
             plyr = new Player(new Vector3(0,0,50));
             enemy = new Enemy(new Vector3(0, 0, -10));
             //boom = new Explosion(new Vector3(0,0,-10));
+
 
             base.Initialize();
         }
@@ -135,7 +137,11 @@ namespace thegame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+<<<<<<< HEAD
             GraphicsDevice.Clear(Color.Black);
+=======
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+>>>>>>> 82af8beab0e494fbb5074d1ee1f129eddbf1aa9e
             GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
             GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 

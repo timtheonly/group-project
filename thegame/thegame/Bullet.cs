@@ -28,7 +28,7 @@ namespace thegame
                  }
                  this.creator = creator;
                  this.pos = pos;
-                 spin = MathHelper.ToRadians(180);
+                 spinY = MathHelper.ToRadians(180);
         }
 
          public override void LoadContent()
@@ -45,24 +45,12 @@ namespace thegame
                  alive = false;
              }
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-             world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spin) * Matrix.CreateTranslation(pos);
+             world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
              base.Update(gameTime);
          }
 
          public override void Draw(GameTime gameTime)
          {
-             //boiler plate code same for drawing all models
-             foreach (ModelMesh mesh in model.Meshes)
-             {
-                 foreach (BasicEffect effect in mesh.Effects)
-                 {
-                     effect.EnableDefaultLighting();
-                     effect.World = world;
-                     effect.Projection = Game1.getInstance().getPlayer().getProjection();
-                     effect.View = Game1.getInstance().getPlayer().getView();
-                 }
-                 mesh.Draw();
-             }
              base.Draw(gameTime);
          }
         
