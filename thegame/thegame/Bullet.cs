@@ -14,6 +14,10 @@ namespace thegame
 {
      public class Bullet : MoveableEntity
     {
+         public void setAlive(bool alive)
+         {
+             this.alive = alive;
+         }
          private MoveableEntity creator;
          public MoveableEntity getCreator()
          {
@@ -29,6 +33,7 @@ namespace thegame
                  this.creator = creator;
                  this.pos = pos;
                  spin = MathHelper.ToRadians(180);
+                 bs.Radius *= 0.035f;
         }
 
          public override void LoadContent()

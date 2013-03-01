@@ -22,7 +22,8 @@ namespace thegame
         protected float spin;
         protected bool alive;
         protected float health;
-        
+
+
         public MoveableEntity()
         {
             right = new Vector3(0, 0, 1);
@@ -30,6 +31,7 @@ namespace thegame
             look = new Vector3(0, 0, -1);
             spin = 0.0f;
             alive = true;
+            
         }
 
         public bool isAlive()

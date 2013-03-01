@@ -17,12 +17,24 @@ namespace thegame
 {
     public class GameEntity
     {
+        protected BoundingSphere bs;
+
+        public BoundingSphere getBoundingSphere()
+        {
+            return bs;
+        }
+        public GameEntity()
+        {
+            bs = new BoundingSphere();
+        }
         protected Vector3 pos;
         protected Model model;
         public Model getModel()
         {
             return model;
         }
+
+       
 
         protected Matrix world;
         public Matrix getWorld()
@@ -37,25 +49,13 @@ namespace thegame
         {
         }
 
-        public bool collidesWith(Model otherModel,Matrix otherWorld)
-        {
-            foreach(ModelMesh mesh in model.Meshes)
-            {
-                foreach(ModelMesh otherMesh in otherModel.Meshes)
-                {
-                    if(mesh.BoundingSphere.Transform(world).Intersects(otherMesh.BoundingSphere.Transform(otherWorld)))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;            
-        }
+
         public virtual void Draw(GameTime gameTime)
         {
             //boiler plate code same for drawing all models
             foreach (ModelMesh mesh in model.Meshes)
             {
+                
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.EnableDefaultLighting();
@@ -65,6 +65,15 @@ namespace thegame
                 }
                 mesh.Draw();
             }
+        }
+
+        public bool collidesWith(BoundingSphere otherBS, Matrix otherWorld)
+        {
+            if (bs.Transform(world).Intersects(otherBS.Transform(otherWorld)))
+            {
+                return true;
+            }
+            return false;
         }
     }
 
