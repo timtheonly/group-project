@@ -27,6 +27,7 @@ namespace thegame
         //overlay for targeting system, health and radar
         Texture2D layer;
         Texture2D healthlayer1,healthlayer2,healthlayer3;
+        SoundEffect Shoot;
         
         private Matrix projection;
         public Matrix getProjection()
@@ -50,6 +51,7 @@ namespace thegame
 
         public override void LoadContent()
         {
+            Shoot = Game1.getInstance().Content.Load<SoundEffect>("sounds\\shotbetter"); //load sound
 
             layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
             //layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
@@ -94,6 +96,7 @@ namespace thegame
                 tempBullet.LoadContent();
                 Game1.getInstance().bullets.Add(tempBullet);
                 lastShot = 0;
+                Shoot.Play();
             }
             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
             view = Matrix.CreateLookAt(pos, pos + look, up);
@@ -117,7 +120,7 @@ namespace thegame
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
-            //Game1.getInstance().getSpriteBatch().Draw(healthlayer2, new Vector2(0, 0), Color.White);
+            //Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, 0), Color.White);
         }
