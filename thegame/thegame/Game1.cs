@@ -138,8 +138,8 @@ namespace thegame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            //GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
-            //GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
+            GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
+            GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here
             foreach (Bullet bullet in bullets)

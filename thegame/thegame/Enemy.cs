@@ -24,7 +24,10 @@ namespace thegame
         public Enemy(Vector3 pos):base()
         {
             this.pos = pos;
-            //spin = MathHelper.ToRadians(90);
+            //Do NOT CHANGE spinX 
+            spinX = 29.86f;
+            spinY = -89.5f;
+            //spinZ = 90;
         }
 
         public override void LoadContent()
@@ -39,10 +42,10 @@ namespace thegame
 
             //uncomment the following and the model will spin::
             float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            spin += timeDelta;
+            //spin += timeDelta;
 
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(1.0f, 1.0f, 15.0f) * Matrix.CreateRotationY(spin) *Matrix.CreateTranslation(pos);
+            world = Matrix.CreateScale(3.894f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY) * Matrix.CreateRotationZ(spinZ) * Matrix.CreateTranslation(pos);
 
             
         }
