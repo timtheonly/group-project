@@ -32,8 +32,10 @@ namespace thegame
                  }
                  this.creator = creator;
                  this.pos = pos;
-                 spin = MathHelper.ToRadians(180);
+
+                 spinY = MathHelper.ToRadians(180);
                  bs.Radius *= 0.035f;
+
         }
 
          public override void LoadContent()
@@ -50,7 +52,7 @@ namespace thegame
                  alive = false;
              }
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-             world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spin) * Matrix.CreateTranslation(pos);
+             world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
              base.Update(gameTime);
          }
 

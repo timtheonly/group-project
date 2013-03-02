@@ -140,9 +140,9 @@ namespace thegame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            //GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
-            //GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
+            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
+            GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here
             foreach (Bullet bullet in bullets)
