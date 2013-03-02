@@ -22,6 +22,9 @@ namespace thegame
         float speed;
         //shot limiter
         float lastShot = 0;
+
+        int hitCount;
+        SpriteFont hitCountSF;
         //overlay for targeting system, health and radar
         Texture2D layer;
         Texture2D healthlayer1,healthlayer2,healthlayer3;
@@ -45,12 +48,13 @@ namespace thegame
             this.pos = pos;
             speed = 0.2f;
             health = 100;
+            bs = new BoundingSphere(pos, 2f);
         }
 
         public override void LoadContent()
         {
-            
 
+            hitCountSF = Game1.getInstance().Content.Load<SpriteFont>("hitcount");
             layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
             //layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
             healthlayer1 = Game1.getInstance().Content.Load<Texture2D>("textures\\1");
@@ -98,7 +102,22 @@ namespace thegame
                 Shoot.Play();
             }
             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //collision detection stuff
+            bs.Center = pos;
+           
+            //check for collisions with bullets
+            foreach (Bullet bullet in Game1.getInstance().bullets)
+            {
+                if (collidesWith(bullet.getBoundingSphere(), bullet.getWorld()) && bullet.getCreator() is Enemy)
+                {
+                    alive = false;
+                    bullet.setAlive(false);
+                    hitCount++;
+                }
+            }
             view = Matrix.CreateLookAt(pos, pos + look, up);
+            world = Matrix.Identity;
             //projection is the view space, anything out of this range is not drawn
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), Game1.getInstance().getGraphics().GraphicsDevice.Viewport.AspectRatio, 1.0f, 100.0f);
             
@@ -120,7 +139,7 @@ namespace thegame
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
             //Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
-            
+            Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "hits " + hitCount, new Vector2(0, 0), Color.White);
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
         }
     }
