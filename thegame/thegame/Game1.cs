@@ -71,7 +71,7 @@ namespace thegame
             // TODO: Add your initialization logic here
             bullets = new List<Bullet>();
             plyr = new Player(new Vector3(0,0,50));
-            enemy = new Enemy(new Vector3(0, 0, -10));
+            enemy = new Enemy(new Vector3(0, -1, -10));
             //boom = new Explosion(new Vector3(0,0,-10));
 
 

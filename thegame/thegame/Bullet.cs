@@ -18,13 +18,14 @@ namespace thegame
          {
              this.alive = alive;
          }
+         int dir;
          private MoveableEntity creator;
          public MoveableEntity getCreator()
          {
              return creator;
          }
 
-         public Bullet(MoveableEntity creator, Vector3 pos)
+         public Bullet(MoveableEntity creator, Vector3 pos, int dir)
          {
                  if (creator is Bullet)
                  {
@@ -32,7 +33,7 @@ namespace thegame
                  }
                  this.creator = creator;
                  this.pos = pos;
-
+                 this.dir = dir;
                  spinY = MathHelper.ToRadians(180);
                  bs.Radius *= 0.035f;
 
@@ -46,8 +47,8 @@ namespace thegame
 
          public override void Update(GameTime gameTime)
          {
-             pos.Z -= 0.6f;
-             if (pos.Z < 0)
+             pos.Z += (0.6f*dir);
+             if (pos.Z < -100)
              {
                  alive = false;
              }

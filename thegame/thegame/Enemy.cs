@@ -48,21 +48,34 @@ namespace thegame
         {
             //game state needed for testing should be removed when working on AI
             GamePadState currentState = GamePad.GetState(PlayerIndex.One);
+            KeyboardState keyState = Keyboard.GetState();
+
+            if (currentState.Buttons.A == ButtonState.Pressed ||keyState.IsKeyDown(Keys.A))
+            {
+                //add offset to bullet to position it near the barrell of the tank
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X-3f, pos.Y+1.0f, pos.Z+15.0f), 1);
+                tempBullet.LoadContent();
+                Game1.getInstance().bullets.Add(tempBullet);
+                //Shoot.Play();
+            }
+
+            //center the bounding sphere on the tanks position
             bs.Center = pos;
+
             //uncomment the following and the model will spin::
             //float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //spin += timeDelta;
+            //spinY += timeDelta;
 
 
 
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(3.894f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY) * Matrix.CreateRotationZ(spinZ) * Matrix.CreateTranslation(pos);
+            world = Matrix.CreateScale(3.894f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY)  * Matrix.CreateTranslation(pos);
 
 
             //check for collisions with bullets
             foreach (Bullet bullet in Game1.getInstance().bullets)
             {
-                if (collidesWith(bullet.getBoundingSphere(), bullet.getWorld()))
+                if (collidesWith(bullet.getBoundingSphere(), bullet.getWorld()) && bullet.getCreator() is  Player)
                 {
                     alive = false;
                     bullet.setAlive(false);

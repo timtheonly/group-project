@@ -25,7 +25,7 @@ namespace thegame
         //overlay for targeting system, health and radar
         Texture2D layer;
         Texture2D healthlayer1,healthlayer2,healthlayer3;
-        SoundEffect Shoot;
+        
         
         private Matrix projection;
         public Matrix getProjection()
@@ -49,13 +49,14 @@ namespace thegame
 
         public override void LoadContent()
         {
-            Shoot = Game1.getInstance().Content.Load<SoundEffect>("sounds\\shotbetter"); //load sound
+            
 
             layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
             //layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
             healthlayer1 = Game1.getInstance().Content.Load<Texture2D>("textures\\1");
             healthlayer2 = Game1.getInstance().Content.Load<Texture2D>("textures\\2");
             healthlayer3 = Game1.getInstance().Content.Load<Texture2D>("textures\\3");
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -90,7 +91,7 @@ namespace thegame
             if ((currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
             {
                 //add offset to the bullet vector3 to center it in the crosshairs
-                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f));
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), -1);
                 tempBullet.LoadContent();
                 Game1.getInstance().bullets.Add(tempBullet);
                 lastShot = 0;
