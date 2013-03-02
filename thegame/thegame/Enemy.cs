@@ -18,7 +18,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
-    class Enemy : MoveableEntity
+    public  class Enemy : MoveableEntity
     {
         
         public Enemy(Vector3 pos):base()
@@ -62,6 +62,7 @@ namespace thegame
             //center the bounding sphere on the tanks position
             bs.Center = pos;
 
+
             //uncomment the following and the model will spin::
             //float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //spinY += timeDelta;
@@ -80,6 +81,11 @@ namespace thegame
                     alive = false;
                     bullet.setAlive(false);
                 }
+            }
+
+            if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()) && Game1.getInstance().getEnemy().isAlive())
+            {
+                alive = false;
             }
         }
         

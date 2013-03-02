@@ -48,6 +48,7 @@ namespace thegame
             this.pos = pos;
             speed = 0.2f;
             health = 100;
+            hitCount = 0;
             bs = new BoundingSphere(pos, 2f);
         }
 
@@ -105,7 +106,12 @@ namespace thegame
 
             //collision detection stuff
             bs.Center = pos;
-           
+
+            if (collidesWith(Game1.getInstance().getEnemy().getBoundingSphere(), Game1.getInstance().getEnemy().getWorld()) && Game1.getInstance().getEnemy().isAlive())
+            {
+                hitCount++;
+            }
+
             //check for collisions with bullets
             foreach (Bullet bullet in Game1.getInstance().bullets)
             {
