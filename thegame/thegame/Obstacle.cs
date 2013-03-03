@@ -19,6 +19,20 @@ namespace thegame
 {
     class Obstacle : GameEntity
     {
-        
+        public Obstacle(Vector3 pos)
+        {
+            this.pos = pos;
+        }
+
+        public override void LoadContent()
+        {
+            model = Game1.getInstance().Content.Load<Model>("models\\square");
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            world = Matrix.CreateScale(2.961f, 2.961f, 2.961f) * Matrix.CreateTranslation(pos);
+            base.Draw(gameTime);
+        }
     }
 }
