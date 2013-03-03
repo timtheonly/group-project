@@ -17,7 +17,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace thegame
 {
-    class Obstacle : GameEntity
+    public class Obstacle : GameEntity
     {
         public Obstacle(Vector3 pos)
         {
@@ -27,6 +27,18 @@ namespace thegame
         public override void LoadContent()
         {
             model = Game1.getInstance().Content.Load<Model>("models\\square");
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                if (bs.Radius == 0)
+                    bs = mesh.BoundingSphere;
+                else
+                    bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        { 
+            
         }
 
         public override void Draw(GameTime gameTime)

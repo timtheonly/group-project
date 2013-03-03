@@ -47,7 +47,7 @@ namespace thegame
         {
             this.pos = pos;
             speed = 0.2f;
-            health = 100;
+            health = 10;
             hitCount = 0;
             bs = new BoundingSphere(pos, 2f);
         }
@@ -98,7 +98,7 @@ namespace thegame
                 //add offset to the bullet vector3 to center it in the crosshairs
                 Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), -1);
                 tempBullet.LoadContent();
-                Game1.getInstance().bullets.Add(tempBullet);
+                Game1.getInstance().setBullet(tempBullet);
                 lastShot = 0;
                 Shoot.Play();
             }
@@ -113,19 +113,30 @@ namespace thegame
             }
 
             //check for collisions with bullets
-            foreach (Bullet bullet in Game1.getInstance().bullets)
+            for (int i = 0; i < Game1.getInstance().getNumBullets();i++)
             {
-                if (collidesWith(bullet.getBoundingSphere(), bullet.getWorld()) && bullet.getCreator() is Enemy)
+                Bullet tempBullet = Game1.getInstance().getBullet(i);
+                if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Enemy)
                 {
                     alive = false;
-                    bullet.setAlive(false);
+                    tempBullet.setAlive(false);
+                    hitCount++;
+                }
+            }
+
+            //check for collisions with obstacles
+            for (int i = 0; i < Game1.getInstance().getNumObstacles(); i++)
+            {
+                Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
+                if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
+                {
                     hitCount++;
                 }
             }
             view = Matrix.CreateLookAt(pos, pos + look, up);
             world = Matrix.Identity;
             //projection is the view space, anything out of this range is not drawn
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), Game1.getInstance().getGraphics().GraphicsDevice.Viewport.AspectRatio, 1.0f, 100.0f);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), Game1.getInstance().getGraphics().GraphicsDevice.Viewport.AspectRatio, 1.0f, 1000.0f);
             
         
         }

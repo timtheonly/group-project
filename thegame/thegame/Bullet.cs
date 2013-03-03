@@ -42,6 +42,13 @@ namespace thegame
          public override void LoadContent()
          {
              model = Game1.getInstance().Content.Load<Model>("models\\Bullet");
+             foreach (ModelMesh mesh in model.Meshes)
+             {
+                 if (bs.Radius == 0)
+                     bs = mesh.BoundingSphere;
+                 else
+                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
+             }
              base.LoadContent();
          }
 

@@ -49,7 +49,33 @@ namespace thegame
             return enemy;
         }
 
-        public List<Bullet> bullets;
+        private List<Bullet> _bullets;
+        public Bullet getBullet(int loc)
+        {
+            return _bullets[loc];
+        }
+        public void setBullet(Bullet bullet)
+        {
+            _bullets.Add(bullet);
+        }
+        public int getNumBullets()
+        {
+            return _bullets.Count;
+        }
+
+        public List<Obstacle> _obstacles;
+        public Obstacle getObstacle(int loc)
+        {
+            return _obstacles[loc];
+        }
+        public void setBullet(Obstacle obstacle)
+        {
+            _obstacles.Add(obstacle);
+        }
+        public int getNumObstacles()
+        {
+            return _obstacles.Count;
+        }
 
         private static Game1 instance;
         public  static Game1 getInstance()
@@ -74,12 +100,12 @@ namespace thegame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            bullets = new List<Bullet>();
+            _bullets = new List<Bullet>();
             plyr = new Player(new Vector3(0,0,50));
 
             enemy = new Enemy(new Vector3(0, -1, -30));
-            obstacle = new Obstacle(new Vector3(7, 0, 30));
-
+            _obstacles = new List<Obstacle>();
+            _obstacles.Add(new Obstacle(new Vector3(7, 0, 30)));
             //boom = new Explosion(new Vector3(0,0,-10));
 
 
@@ -95,8 +121,11 @@ namespace thegame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             enemy.LoadContent();
-            obstacle.LoadContent();
-            foreach(Bullet bullet in bullets)
+            foreach (Obstacle obstacle in _obstacles)
+            {
+                obstacle.LoadContent();
+            }
+            foreach(Bullet bullet in _bullets)
             {
                 bullet.LoadContent();
             }
@@ -129,16 +158,21 @@ namespace thegame
             }
             // TODO: Add your update logic here
             plyr.Update(gameTime);
-            for (int i = 0; i < bullets.Count;i++ )
+            for (int i = 0; i < _bullets.Count;i++ )
             {
-                if (bullets[i].isAlive())
+                if (_bullets[i].isAlive())
                 {
-                    bullets[i].Update(gameTime);
+                    _bullets[i].Update(gameTime);
                 }
                 else
                 {
-                    bullets.RemoveAt(i);
+                    _bullets.RemoveAt(i);
                 }
+            }
+
+            foreach (Obstacle obstacle in _obstacles)
+            {
+                obstacle.Update(gameTime);
             }
             base.Update(gameTime);
         }
@@ -154,17 +188,19 @@ namespace thegame
             GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here
-            foreach (Bullet bullet in bullets)
+            foreach (Bullet bullet in _bullets)
             {
                 bullet.Draw(gameTime);
             }
-            
+            foreach (Obstacle obstacle in _obstacles)
+            {
+                obstacle.Draw(gameTime);
+            }
             if (enemy.isAlive())
             {
                 enemy.Draw(gameTime);
             }
             enemy.Draw(gameTime);
-            obstacle.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             //boom.Draw(gameTime);

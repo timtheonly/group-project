@@ -41,7 +41,7 @@ namespace thegame
                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
             }
             bs.Radius = 3.894f;
-            
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -55,8 +55,8 @@ namespace thegame
                 //add offset to bullet to position it near the barrell of the tank
                 Bullet tempBullet = new Bullet(this, new Vector3(pos.X-3f, pos.Y+1.0f, pos.Z+15.0f), 1);
                 tempBullet.LoadContent();
-                Game1.getInstance().bullets.Add(tempBullet);
-                //Shoot.Play();
+                Game1.getInstance().setBullet(tempBullet);
+                Shoot.Play();
             }
 
             //center the bounding sphere on the tanks position
@@ -72,14 +72,23 @@ namespace thegame
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
             world = Matrix.CreateScale(3.894f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY)  * Matrix.CreateTranslation(pos);
 
-
             //check for collisions with bullets
-            foreach (Bullet bullet in Game1.getInstance().bullets)
+            for (int i = 0; i < Game1.getInstance().getNumBullets(); i++)
             {
-                if (collidesWith(bullet.getBoundingSphere(), bullet.getWorld()) && bullet.getCreator() is  Player)
+                Bullet tempBullet = Game1.getInstance().getBullet(i);
+                if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Player)
                 {
                     alive = false;
-                    bullet.setAlive(false);
+                    tempBullet.setAlive(false);
+                }
+            }
+
+            for (int i = 0; i < Game1.getInstance().getNumObstacles(); i++)
+            {
+                Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
+                if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
+                {
+                    alive= false;
                 }
             }
 
