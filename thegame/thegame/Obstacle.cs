@@ -37,8 +37,16 @@ namespace thegame
         }
 
         public override void Update(GameTime gameTime)
-        { 
-            
+        {
+            //check for collisions with bullets
+            for (int i = 0; i < Game1.getInstance().getNumBullets(); i++)
+            {
+                Bullet tempBullet = Game1.getInstance().getBullet(i);
+                if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Player)
+                {
+                    tempBullet.setAlive(false);
+                }
+            }
         }
 
         public override void Draw(GameTime gameTime)
