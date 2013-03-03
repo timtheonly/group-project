@@ -41,6 +41,7 @@ namespace thegame
             return boom;
         }
 
+        private Obstacle obstacle;
 
         private Enemy enemy;
         public Enemy getEnemy()
@@ -75,7 +76,10 @@ namespace thegame
             // TODO: Add your initialization logic here
             bullets = new List<Bullet>();
             plyr = new Player(new Vector3(0,0,50));
+
             enemy = new Enemy(new Vector3(0, -1, -30));
+            obstacle = new Obstacle(new Vector3(7, 0, 30));
+
             //boom = new Explosion(new Vector3(0,0,-10));
 
 
@@ -91,6 +95,7 @@ namespace thegame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             enemy.LoadContent();
+            obstacle.LoadContent();
             foreach(Bullet bullet in bullets)
             {
                 bullet.LoadContent();
@@ -153,10 +158,13 @@ namespace thegame
             {
                 bullet.Draw(gameTime);
             }
+            
             if (enemy.isAlive())
             {
                 enemy.Draw(gameTime);
             }
+            enemy.Draw(gameTime);
+            obstacle.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             //boom.Draw(gameTime);
