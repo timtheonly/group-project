@@ -49,6 +49,7 @@ namespace thegame
             return enemy;
         }
 
+        private Radar radar;
         private List<Bullet> _bullets;
         public Bullet getBullet(int loc)
         {
@@ -101,11 +102,13 @@ namespace thegame
         {
             // TODO: Add your initialization logic here
             _bullets = new List<Bullet>();
-            plyr = new Player(new Vector3(0,0,50));
-
-            enemy = new Enemy(new Vector3(0, -1, -30));
             _obstacles = new List<Obstacle>();
             _obstacles.Add(new Obstacle(new Vector3(7, 0, 30)));
+           
+            plyr = new Player(new Vector3(0,0,50));
+            radar = new Radar();
+            enemy = new Enemy(new Vector3(0, -1, -30));
+           
             //boom = new Explosion(new Vector3(0,0,-10));
 
 
@@ -120,7 +123,7 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            enemy.LoadContent();
+            
             foreach (Obstacle obstacle in _obstacles)
             {
                 obstacle.LoadContent();
@@ -129,6 +132,9 @@ namespace thegame
             {
                 bullet.LoadContent();
             }
+
+            radar.LoadContent();
+            enemy.LoadContent();
             plyr.LoadContent();
             // TODO: use this.Content to load your game content here
         }
@@ -157,6 +163,7 @@ namespace thegame
                 enemy.Update(gameTime);
             }
             // TODO: Add your update logic here
+            radar.Update(gameTime);
             plyr.Update(gameTime);
             for (int i = 0; i < _bullets.Count;i++ )
             {
@@ -203,6 +210,7 @@ namespace thegame
             enemy.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
+            radar.Draw(gameTime);
             //boom.Draw(gameTime);
             spriteBatch.End();
          

@@ -83,6 +83,7 @@ namespace thegame
                 }
             }
 
+            //check for collisions with obstacles
             for (int i = 0; i < Game1.getInstance().getNumObstacles(); i++)
             {
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
@@ -92,7 +93,8 @@ namespace thegame
                 }
             }
 
-            if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()) && Game1.getInstance().getEnemy().isAlive())
+            //check for collisions with player
+            if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()))
             {
                 alive = false;
             }

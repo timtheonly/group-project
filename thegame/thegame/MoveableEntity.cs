@@ -25,7 +25,10 @@ namespace thegame
         protected bool alive;
         protected float health;
 
-
+        public Vector3 getPos()
+        {
+            return pos;
+        }
         public MoveableEntity()
         {
             right = new Vector3(0, 0, 1);
