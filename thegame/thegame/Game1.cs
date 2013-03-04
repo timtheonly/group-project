@@ -41,8 +41,6 @@ namespace thegame
             return boom;
         }
 
-        private Obstacle obstacle;
-
         private Enemy enemy;
         public Enemy getEnemy()
         {
@@ -103,7 +101,15 @@ namespace thegame
             // TODO: Add your initialization logic here
             _bullets = new List<Bullet>();
             _obstacles = new List<Obstacle>();
-            _obstacles.Add(new Obstacle(new Vector3(7, 0, 30)));
+
+            //Random obstacles. Obstacles have a possibility of spawning on each other. Looking for a fix
+            Random rand = new Random();
+            for (int num = 0; num < 20; num++)
+            {
+                int x = rand.Next(-200, 200);
+                int z = rand.Next(-200, 200);
+                _obstacles.Add(new Obstacle(new Vector3(x, 0, z)));
+            }
            
             plyr = new Player(new Vector3(0,0,50));
             radar = new Radar();
