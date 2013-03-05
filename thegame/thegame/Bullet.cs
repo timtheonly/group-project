@@ -25,12 +25,13 @@ namespace thegame
              return creator;
          }
 
-         public Bullet(MoveableEntity creator, Vector3 pos, int dir)
+         public Bullet(MoveableEntity creator, Vector3 pos, int dir, Vector3 look)
          {
                  if (creator is Bullet)
                  {
                      throw new BulletException();
                  }
+                 this.look = look;
                  this.creator = creator;
                  this.pos = pos;
                  this.dir = dir;
@@ -54,7 +55,7 @@ namespace thegame
 
          public override void Update(GameTime gameTime)
          {
-             pos.Z += (0.6f*dir);
+             forward();
              if (pos.Z < -100)
              {
                  alive = false;

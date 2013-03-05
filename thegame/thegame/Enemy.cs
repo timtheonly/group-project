@@ -20,7 +20,8 @@ namespace thegame
 {
     public  class Enemy : MoveableEntity
     {
-        
+        float lastShot=  0.0f;
+        Random randomSpeed = new Random();
         public Enemy(Vector3 pos):base()
         {
             this.pos = pos;
@@ -28,6 +29,7 @@ namespace thegame
             spinX = 29.86f;
             spinY = -89.5f;
             //spinZ = 90;
+            look = new Vector3(0,0,1);
         }
 
         public override void LoadContent()
@@ -46,18 +48,17 @@ namespace thegame
 
         public override void Update(GameTime gameTime)
         {
-            //game state needed for testing should be removed when working on AI
-            GamePadState currentState = GamePad.GetState(PlayerIndex.One);
-            KeyboardState keyState = Keyboard.GetState();
-
-            if (currentState.Buttons.A == ButtonState.Pressed ||keyState.IsKeyDown(Keys.A))
+            if (lastShot > 2f)
             {
                 //add offset to bullet to position it near the barrell of the tank
-                Bullet tempBullet = new Bullet(this, new Vector3(pos.X-3f, pos.Y+1.0f, pos.Z+15.0f), 1);
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X-3f, pos.Y+1.5f, pos.Z+15.0f), 1, look);
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 Shoot.Play();
+                lastShot = 0;
             }
+
+            lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //center the bounding sphere on the tanks position
             bs.Center = pos;
@@ -89,7 +90,7 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    alive= false;
+                    //do nothing for now
                 }
             }
 

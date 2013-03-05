@@ -19,7 +19,6 @@ namespace thegame
    public  class Player : MoveableEntity
     {
 
-        float speed;
         //shot limiter
         float lastShot = 0;
 
@@ -46,7 +45,6 @@ namespace thegame
         public Player(Vector3 pos)
         {
             this.pos = pos;
-            speed = 0.2f;
             health = 10;
             hitCount = 0;
             bs = new BoundingSphere(pos, 2f);
@@ -72,31 +70,31 @@ namespace thegame
             // move camera left and right
             if (currentState.ThumbSticks.Right.X < 0 || keyState.IsKeyDown(Keys.Left))
             {
-                pos -= Vector3.Cross(up, right) * speed;
+                yaw(MathHelper.ToRadians(0.5f));
             }
 
             if (currentState.ThumbSticks.Right.X > 0 || keyState.IsKeyDown(Keys.Right))
             {
-                pos += Vector3.Cross(up, right) * speed;
+                yaw(MathHelper.ToRadians(-0.5f));
 
             }
 
             //move camera forward and back
             if (currentState.ThumbSticks.Right.Y > 0 || keyState.IsKeyDown(Keys.Up))
             {
-                pos -= right * speed;
+                forward();
             }
 
             if (currentState.ThumbSticks.Right.Y < 0 || keyState.IsKeyDown(Keys.Down))
             {
-                pos += right * speed;
+                backward();
             }
             
             // limit the amount of bullets that can be spawned with last shot
             if ((currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
             {
                 //add offset to the bullet vector3 to center it in the crosshairs
-                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), -1);
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), -1, look);
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 lastShot = 0;

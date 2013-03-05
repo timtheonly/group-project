@@ -213,7 +213,6 @@ namespace thegame
             {
                 enemy.Draw(gameTime);
             }
-            enemy.Draw(gameTime);
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             radar.Draw(gameTime);
