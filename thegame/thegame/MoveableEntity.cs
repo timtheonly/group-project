@@ -26,10 +26,7 @@ namespace thegame
         protected float health;
 
 
-        public Vector3 getPos()
-        {
-            return pos;
-        }
+
         public MoveableEntity()
         {
             up = new Vector3(0, 1, 0);

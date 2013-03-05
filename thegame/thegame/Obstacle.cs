@@ -34,6 +34,7 @@ namespace thegame
                 else
                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
             }
+            bs.Radius = 2f;
         }
 
         public override void Update(GameTime gameTime)

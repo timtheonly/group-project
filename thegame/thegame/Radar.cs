@@ -66,7 +66,10 @@ namespace thegame
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             Game1.getInstance().getSpriteBatch().Draw(radarLayer, radarCenterPos, null, Color.White, 0.0f, imageCenter, radarScreenRadius / (radarLayer.Height * 0.5f), SpriteEffects.None, 0.0f);
-            Game1.getInstance().getSpriteBatch().Draw(enemyDot, new Vector2(differanceVect.X - (playerDot.Width * 0.5f), differanceVect.Y - (playerDot.Width * 0.5f)), null, Color.White, 0.0f, new Vector2(0.0f, 0.0f), 1.0f, SpriteEffects.None, 0.0f);
+            if (Game1.getInstance().getEnemy().isAlive())
+            {
+                Game1.getInstance().getSpriteBatch().Draw(enemyDot, new Vector2(differanceVect.X - (playerDot.Width * 0.5f), differanceVect.Y - (playerDot.Width * 0.5f)), null, Color.White, 0.0f, new Vector2(0.0f, 0.0f), 1.0f, SpriteEffects.None, 0.0f);
+            }
             Game1.getInstance().getSpriteBatch().Draw(playerDot, new Vector2(radarCenterPos.X-(playerDot.Width *0.5f),radarCenterPos.Y-(playerDot.Width *0.5f)), Color.White);
             //base.Draw(gameTime);
         } 

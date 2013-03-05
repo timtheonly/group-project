@@ -24,10 +24,12 @@ namespace thegame
 
         int hitCount;
         SpriteFont hitCountSF;
+        SpriteFont collisionSF;
         //overlay for targeting system, health and radar
         Texture2D layer;
         Texture2D healthlayer1,healthlayer2,healthlayer3;
-        
+
+        private String collisionString ="";
         
         private Matrix projection;
         public Matrix getProjection()
@@ -54,6 +56,7 @@ namespace thegame
         {
 
             hitCountSF = Game1.getInstance().Content.Load<SpriteFont>("hitcount");
+            collisionSF = Game1.getInstance().Content.Load<SpriteFont>("collision");
             layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
             //layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
             healthlayer1 = Game1.getInstance().Content.Load<Texture2D>("textures\\1");
@@ -128,7 +131,8 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    hitCount++;
+                    backward();
+                    collisionString = "collision: x: " + tempObstacle.getPos().X + " y: " + tempObstacle.getPos().Y + " Z: " + tempObstacle.getPos().Z;
                 }
             }
             view = Matrix.CreateLookAt(pos, pos + look, up);
@@ -154,7 +158,8 @@ namespace thegame
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
             //Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
-            Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "hits " + hitCount, new Vector2(0, 0), Color.White);
+            Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "location: x: " + pos.X + " y: "+ pos.Y + "Z: " + pos.Z, new Vector2(0, 0), Color.White);
+            Game1.getInstance().getSpriteBatch().DrawString(collisionSF, collisionString, new Vector2(0, 10), Color.White);
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
         }
     }

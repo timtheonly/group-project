@@ -56,7 +56,7 @@ namespace thegame
          public override void Update(GameTime gameTime)
          {
              forward();
-             if (pos.Z < -100)
+             if (pos.Z < -100 || pos.Z > 500)
              {
                  alive = false;
              }

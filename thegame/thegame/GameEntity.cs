@@ -35,6 +35,10 @@ namespace thegame
             return model;
         }
 
+        public Vector3 getPos()
+        {
+            return pos;
+        }
        
 
         protected Matrix world;
