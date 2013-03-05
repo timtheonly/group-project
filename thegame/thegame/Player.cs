@@ -129,6 +129,15 @@ namespace thegame
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
                     hitCount++;
+                    if (currentState.ThumbSticks.Right.Y > 0 || keyState.IsKeyDown(Keys.Up))
+                    {
+                        backward();
+                    }
+
+                    if (currentState.ThumbSticks.Right.Y < 0 || keyState.IsKeyDown(Keys.Down))
+                    {
+                        forward();
+                    }
                 }
             }
             view = Matrix.CreateLookAt(pos, pos + look, up);

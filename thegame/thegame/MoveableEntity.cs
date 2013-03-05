@@ -44,7 +44,6 @@ namespace thegame
         public void forward()
         {
             pos += look;
-
         }
 
         public void backward()
