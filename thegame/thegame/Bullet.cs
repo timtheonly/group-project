@@ -18,7 +18,6 @@ namespace thegame
          {
              this.alive = alive;
          }
-         Vector3 dir;
          private MoveableEntity creator;
          public MoveableEntity getCreator()
          {
@@ -36,8 +35,6 @@ namespace thegame
                  this.pos = pos;
                  spinY = MathHelper.ToRadians(180);
                  bs.Radius *= 0.035f;
-                 pos.Z -= 10;
-
         }
 
          public override void LoadContent()

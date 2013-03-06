@@ -17,7 +17,6 @@ namespace thegame
 {
     public class MoveableEntity :GameEntity
     {
-
         protected Vector3 modelVelocity, up,right, look;
         protected float spinX;
         protected float spinY;
@@ -25,7 +24,11 @@ namespace thegame
         protected bool alive;
         protected float health;
 
-
+        protected static int score;
+        public void Score()
+        {
+            score += 1000;
+        }
 
         public MoveableEntity()
         {

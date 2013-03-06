@@ -18,7 +18,7 @@ namespace thegame
     public class GameEntity
     {
         protected BoundingSphere bs;
-        protected SoundEffect Shoot;
+        protected SoundEffect Shoot, Crash;
 
         public BoundingSphere getBoundingSphere()
         {
@@ -50,6 +50,7 @@ namespace thegame
         public virtual void LoadContent()
         {
             Shoot = Game1.getInstance().Content.Load<SoundEffect>("sounds\\shotbetter"); //load sound
+            Crash = Game1.getInstance().Content.Load<SoundEffect>("sounds\\crash");
         }
         public virtual void Update(GameTime gameTime)
         {
@@ -82,6 +83,4 @@ namespace thegame
             return false;
         }
     }
-
-
 }
