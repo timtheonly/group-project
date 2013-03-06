@@ -41,10 +41,40 @@ namespace thegame
             return boom;
         }
 
-
         private Enemy enemy;
+        public Enemy getEnemy()
+        {
+            return enemy;
+        }
 
-        public List<Bullet> bullets;
+        private Radar radar;
+        private List<Bullet> _bullets;
+        public Bullet getBullet(int loc)
+        {
+            return _bullets[loc];
+        }
+        public void setBullet(Bullet bullet)
+        {
+            _bullets.Add(bullet);
+        }
+        public int getNumBullets()
+        {
+            return _bullets.Count;
+        }
+
+        public List<Obstacle> _obstacles;
+        public Obstacle getObstacle(int loc)
+        {
+            return _obstacles[loc];
+        }
+        public void setBullet(Obstacle obstacle)
+        {
+            _obstacles.Add(obstacle);
+        }
+        public int getNumObstacles()
+        {
+            return _obstacles.Count;
+        }
 
         private static Game1 instance;
         public  static Game1 getInstance()
@@ -69,9 +99,22 @@ namespace thegame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            bullets = new List<Bullet>();
+            _bullets = new List<Bullet>();
+            _obstacles = new List<Obstacle>();
+
+            //Random obstacles. Obstacles have a possibility of spawning on each other. Looking for a fix
+            Random rand = new Random();
+            for (int num = 0; num < 20; num++)
+            {
+                int x = rand.Next(-200, 200);
+                int z = rand.Next(-200, 200);
+                _obstacles.Add(new Obstacle(new Vector3(x, 0, z)));
+            }
+           
             plyr = new Player(new Vector3(0,0,50));
-            enemy = new Enemy(new Vector3(0, 0, -10));
+            radar = new Radar();
+            enemy = new Enemy(new Vector3(0, -1, -30));
+           
             //boom = new Explosion(new Vector3(0,0,-10));
 
 
@@ -86,11 +129,18 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            enemy.LoadContent();
-            foreach(Bullet bullet in bullets)
+            
+            foreach (Obstacle obstacle in _obstacles)
+            {
+                obstacle.LoadContent();
+            }
+            foreach(Bullet bullet in _bullets)
             {
                 bullet.LoadContent();
             }
+
+            radar.LoadContent();
+            enemy.LoadContent();
             plyr.LoadContent();
             // TODO: use this.Content to load your game content here
         }
@@ -114,19 +164,28 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            enemy.Update(gameTime);
-            // TODO: Add your update logic here
-            plyr.Update(gameTime);
-            for (int i = 0; i < bullets.Count;i++ )
+            if (enemy.isAlive())
             {
-                if (bullets[i].isAlive())
+                enemy.Update(gameTime);
+            }
+            // TODO: Add your update logic here
+            radar.Update(gameTime);
+            plyr.Update(gameTime);
+            for (int i = 0; i < _bullets.Count;i++ )
+            {
+                if (_bullets[i].isAlive())
                 {
-                    bullets[i].Update(gameTime);
+                    _bullets[i].Update(gameTime);
                 }
                 else
                 {
-                    bullets.RemoveAt(i);
+                    _bullets.RemoveAt(i);
                 }
+            }
+
+            foreach (Obstacle obstacle in _obstacles)
+            {
+                obstacle.Update(gameTime);
             }
             base.Update(gameTime);
         }
@@ -143,13 +202,21 @@ namespace thegame
             GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here
-            foreach (Bullet bullet in bullets)
+            foreach (Bullet bullet in _bullets)
             {
                 bullet.Draw(gameTime);
             }
-            enemy.Draw(gameTime);
+            foreach (Obstacle obstacle in _obstacles)
+            {
+                obstacle.Draw(gameTime);
+            }
+            if (enemy.isAlive())
+            {
+                enemy.Draw(gameTime);
+            }
             spriteBatch.Begin();
             plyr.Draw(gameTime);
+            radar.Draw(gameTime);
             //boom.Draw(gameTime);
             spriteBatch.End();
          

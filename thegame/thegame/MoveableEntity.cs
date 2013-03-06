@@ -24,18 +24,37 @@ namespace thegame
         protected float spinZ;
         protected bool alive;
         protected float health;
-        
+
+
+        public Vector3 getPos()
+        {
+            return pos;
+        }
         public MoveableEntity()
         {
-            right = new Vector3(0, 0, 1);
             up = new Vector3(0, 1, 0);
             look = new Vector3(0, 0, -1);
             spinX = 0.0f;
             spinY = 0.0f;
             spinZ = 0.0f;
             alive = true;
+            
         }
 
+        public void forward()
+        {
+            pos += look;
+        }
+
+        public void backward()
+        {
+            pos -= look;
+        }
+        protected void yaw( float angle)
+        {
+            Matrix T = Matrix.CreateRotationY(angle);
+            look = Vector3.Transform(look, T);
+        }
         public bool isAlive()
         {
             return alive;

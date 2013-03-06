@@ -14,33 +14,49 @@ namespace thegame
 {
      public class Bullet : MoveableEntity
     {
+         public void setAlive(bool alive)
+         {
+             this.alive = alive;
+         }
+         int dir;
          private MoveableEntity creator;
          public MoveableEntity getCreator()
          {
              return creator;
          }
 
-         public Bullet(MoveableEntity creator, Vector3 pos)
+         public Bullet(MoveableEntity creator, Vector3 pos, int dir, Vector3 look)
          {
                  if (creator is Bullet)
                  {
                      throw new BulletException();
                  }
+                 this.look = look;
                  this.creator = creator;
                  this.pos = pos;
+                 this.dir = dir;
                  spinY = MathHelper.ToRadians(180);
+                 bs.Radius *= 0.035f;
+
         }
 
          public override void LoadContent()
          {
              model = Game1.getInstance().Content.Load<Model>("models\\Bullet");
+             foreach (ModelMesh mesh in model.Meshes)
+             {
+                 if (bs.Radius == 0)
+                     bs = mesh.BoundingSphere;
+                 else
+                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
+             }
              base.LoadContent();
          }
 
          public override void Update(GameTime gameTime)
          {
-             pos.Z -= 0.6f;
-             if (pos.Z < 0)
+             forward();
+             if (pos.Z < -100)
              {
                  alive = false;
              }
