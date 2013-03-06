@@ -16,7 +16,7 @@ namespace thegame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.None, FillMode = FillMode.WireFrame };
+        RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.CullClockwiseFace, FillMode = FillMode.WireFrame };
         private GraphicsDeviceManager graphics;
         public GraphicsDeviceManager getGraphics()
         {
@@ -198,6 +198,7 @@ namespace thegame
         {
             GraphicsDevice.Clear(Color.Black);
             GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
+
             GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here

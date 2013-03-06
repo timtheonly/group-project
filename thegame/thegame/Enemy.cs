@@ -85,7 +85,9 @@ namespace thegame
 
            
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(3.894f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX)*Matrix.CreateRotationY(spinY) * Matrix.CreateWorld(pos, direction, up);
+
+            world = Matrix.CreateScale(3.692f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY) * Matrix.CreateRotationZ(spinZ) *  Matrix.CreateWorld(pos, direction, up);
+
 
             //check for collisions with bullets
             for (int i = 0; i < Game1.getInstance().getNumBullets(); i++)
@@ -98,6 +100,7 @@ namespace thegame
                 }
             }
 
+
             //check for collisions with obstacles
             for (int i = 0; i < Game1.getInstance().getNumObstacles(); i++)
             {
@@ -107,6 +110,7 @@ namespace thegame
                     backward();
                 }
             }
+
 
             //check for collisions with player
             if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()))
@@ -119,13 +123,6 @@ namespace thegame
         {
 
             base.Draw(gameTime);
-        }
-
-        public float getAngleBetweenPoints(Vector3 a, Vector3 b)
-        { 
-            float xDiff = b.X -a.X;
-            float zDiff = b.Z - a.Z;
-            return MathHelper.ToRadians((float)Math.Atan2(zDiff, xDiff));
         }
     }
 }

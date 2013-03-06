@@ -131,8 +131,16 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    backward();
                     collisionString = "collision: x: " + tempObstacle.getPos().X + " y: " + tempObstacle.getPos().Y + " Z: " + tempObstacle.getPos().Z;
+                    if (currentState.ThumbSticks.Right.Y > 0 || keyState.IsKeyDown(Keys.Up))
+                    {
+                        backward();
+                    }
+
+                    if (currentState.ThumbSticks.Right.Y < 0 || keyState.IsKeyDown(Keys.Down))
+                    {
+                        forward();
+                    }
                 }
             }
             view = Matrix.CreateLookAt(pos, pos + look, up);
@@ -157,7 +165,7 @@ namespace thegame
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
-            //Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
+            
             Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "location: x: " + pos.X + " y: "+ pos.Y + "Z: " + pos.Z, new Vector2(0, 0), Color.White);
             Game1.getInstance().getSpriteBatch().DrawString(collisionSF, collisionString, new Vector2(0, 10), Color.White);
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);

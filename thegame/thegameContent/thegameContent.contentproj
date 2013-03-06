@@ -128,8 +128,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="models\tank3.fbx">
-      <Name>tank3</Name>
+    <Compile Include="models\tank%28Anim%29.fbx">
+      <Name>tank%28Anim%29</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
