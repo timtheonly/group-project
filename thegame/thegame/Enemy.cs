@@ -22,14 +22,16 @@ namespace thegame
     {
         float lastShot=  0.0f;
         Random randomSpeed = new Random();
+        
         public Enemy(Vector3 pos):base()
         {
             this.pos = pos;
             //Do NOT CHANGE spinX 
             spinX = 29.86f;
-            spinY = -89.5f;
+            spinY = 89.5f;
             //spinZ = 90;
             look = new Vector3(0,0,1);
+            world = Matrix.Identity;
         }
 
         public override void LoadContent()
@@ -42,36 +44,48 @@ namespace thegame
                 else
                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
             }
-            bs.Radius = 3.894f;
+            bs.Radius = 3.5f;
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
+
+            Vector3 direction = Game1.getInstance().getPlayer().getPos() - pos;
+            direction.Normalize();
             if (lastShot > 2f)
             {
                 //add offset to bullet to position it near the barrell of the tank
-                Bullet tempBullet = new Bullet(this, new Vector3(pos.X-3f, pos.Y+1.5f, pos.Z+15.0f), 1, look);
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X, pos.Y, pos.Z), (Game1.getInstance().getPlayer().Look())*-1, world.Forward);
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 Shoot.Play();
                 lastShot = 0;
             }
 
-            lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //center the bounding sphere on the tanks position
             bs.Center = pos;
+            KeyboardState keyState = Keyboard.GetState();
+            if(keyState.IsKeyDown(Keys.A))
+            {
+                yaw(MathHelper.ToRadians(0.5f));
+                spinY += MathHelper.ToRadians(0.5f);
+            }
 
-
+            if (keyState.IsKeyDown(Keys.W))
+            {
+                forward();
+            }
             //uncomment the following and the model will spin::
             //float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //spinY += timeDelta;
 
 
-
+           
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(3.894f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY)  * Matrix.CreateTranslation(pos);
+            world = Matrix.CreateScale(3.894f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX)*Matrix.CreateRotationY(spinY) * Matrix.CreateWorld(pos, direction, up);
 
             //check for collisions with bullets
             for (int i = 0; i < Game1.getInstance().getNumBullets(); i++)
@@ -105,6 +119,13 @@ namespace thegame
         {
 
             base.Draw(gameTime);
+        }
+
+        public float getAngleBetweenPoints(Vector3 a, Vector3 b)
+        { 
+            float xDiff = b.X -a.X;
+            float zDiff = b.Z - a.Z;
+            return MathHelper.ToRadians((float)Math.Atan2(zDiff, xDiff));
         }
     }
 }

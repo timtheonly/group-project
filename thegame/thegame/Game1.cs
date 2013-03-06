@@ -113,7 +113,7 @@ namespace thegame
            
             plyr = new Player(new Vector3(0,0,50));
             radar = new Radar();
-            enemy = new Enemy(new Vector3(0, -1, -30));
+            enemy = new Enemy(new Vector3(0, 0, -30));
            
             //boom = new Explosion(new Vector3(0,0,-10));
 

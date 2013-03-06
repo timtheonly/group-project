@@ -97,7 +97,7 @@ namespace thegame
             if ((currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
             {
                 //add offset to the bullet vector3 to center it in the crosshairs
-                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), -1, look);
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), look, world.Forward);
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 lastShot = 0;
@@ -162,5 +162,15 @@ namespace thegame
             Game1.getInstance().getSpriteBatch().DrawString(collisionSF, collisionString, new Vector2(0, 10), Color.White);
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
         }
+
+       public Vector3 Look()
+       {
+           return look;
+       }
+
+       public float getYSpin()
+       {
+           return spinY;
+       }
     }
 }
