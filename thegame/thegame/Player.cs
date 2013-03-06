@@ -97,7 +97,7 @@ namespace thegame
             if ((currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
             {
                 //add offset to the bullet vector3 to center it in the crosshairs
-                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), look, world.Forward);
+                Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), look);
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 lastShot = 0;

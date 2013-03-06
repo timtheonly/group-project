@@ -56,7 +56,7 @@ namespace thegame
             if (lastShot > 2f)
             {
                 //add offset to bullet to position it near the barrell of the tank
-                Bullet tempBullet = new Bullet(this, new Vector3(pos.X, pos.Y, pos.Z), (Game1.getInstance().getPlayer().Look())*-1, world.Forward);
+                Bullet tempBullet = new Bullet(this, pos + (world.Left *-8.5f)+ (world.Forward * -10), (Game1.getInstance().getPlayer().Look()) * -1);
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 Shoot.Play();

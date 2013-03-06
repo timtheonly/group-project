@@ -14,7 +14,6 @@ namespace thegame
 {
      public class Bullet : MoveableEntity
     {
-         private Vector3 direction;
          public void setAlive(bool alive)
          {
              this.alive = alive;
@@ -26,7 +25,7 @@ namespace thegame
              return creator;
          }
 
-         public Bullet(MoveableEntity creator, Vector3 pos, Vector3 look, Vector3 dir)
+         public Bullet(MoveableEntity creator, Vector3 pos, Vector3 look)
          {
                  if (creator is Bullet)
                  {
@@ -35,7 +34,6 @@ namespace thegame
                  this.look = look;
                  this.creator = creator;
                  this.pos = pos;
-                 this.dir = dir;
                  spinY = MathHelper.ToRadians(180);
                  bs.Radius *= 0.035f;
                  pos.Z -= 10;
@@ -63,7 +61,7 @@ namespace thegame
                  alive = false;
              }
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-             world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos + direction);
+             world = Matrix.CreateScale(0.035f, 0.035f, 0.035f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
              base.Update(gameTime);
          }
 
