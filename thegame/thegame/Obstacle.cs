@@ -46,6 +46,7 @@ namespace thegame
                 if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Player)
                 {
                     tempBullet.setAlive(false);
+                    Shoot.Play();
                 }
             }
         }

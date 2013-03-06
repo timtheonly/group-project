@@ -17,7 +17,6 @@ namespace thegame
 {
     public class MoveableEntity :GameEntity
     {
-
         protected Vector3 modelVelocity, up,right, look;
         protected float spinX;
         protected float spinY;

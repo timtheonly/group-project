@@ -39,7 +39,6 @@ namespace thegame
                  spinY = MathHelper.ToRadians(180);
                  bs.Radius *= 0.035f;
                  pos.Z -= 10;
-
         }
 
          public override void LoadContent()

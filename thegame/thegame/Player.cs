@@ -18,7 +18,6 @@ namespace thegame
 {
    public  class Player : MoveableEntity
     {
-
         //shot limiter
         float lastShot = 0;
 
@@ -26,6 +25,7 @@ namespace thegame
         SpriteFont hitCountSF;
         SpriteFont collisionSF;
         SpriteFont scoreSF;
+
         //overlay for targeting system, health and radar
         Texture2D layer;
         Texture2D healthlayer1,healthlayer2,healthlayer3;
@@ -37,7 +37,6 @@ namespace thegame
         {
             return projection;
         }
-
        
         private Matrix view;
         public Matrix getView()
@@ -132,6 +131,8 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
+                    Crash.Play();
+
                     collisionString = "collision: x: " + tempObstacle.getPos().X + " y: " + tempObstacle.getPos().Y + " Z: " + tempObstacle.getPos().Z;
                     if (currentState.ThumbSticks.Right.Y > 0 || keyState.IsKeyDown(Keys.Up))
                     {
@@ -148,8 +149,6 @@ namespace thegame
             world = Matrix.Identity;
             //projection is the view space, anything out of this range is not drawn
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), Game1.getInstance().getGraphics().GraphicsDevice.Viewport.AspectRatio, 1.0f, 1000.0f);
-            
-        
         }
 
         public override void Draw(GameTime gameTime)
