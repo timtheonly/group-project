@@ -25,6 +25,7 @@ namespace thegame
         int hitCount;
         SpriteFont hitCountSF;
         SpriteFont collisionSF;
+        SpriteFont scoreSF;
         //overlay for targeting system, health and radar
         Texture2D layer;
         Texture2D healthlayer1,healthlayer2,healthlayer3;
@@ -54,7 +55,7 @@ namespace thegame
 
         public override void LoadContent()
         {
-
+            scoreSF = Game1.getInstance().Content.Load<SpriteFont>("textures\\Score");
             hitCountSF = Game1.getInstance().Content.Load<SpriteFont>("hitcount");
             collisionSF = Game1.getInstance().Content.Load<SpriteFont>("collision");
             layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
@@ -169,6 +170,8 @@ namespace thegame
             Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "location: x: " + pos.X + " y: "+ pos.Y + "Z: " + pos.Z, new Vector2(0, 0), Color.White);
             Game1.getInstance().getSpriteBatch().DrawString(collisionSF, collisionString, new Vector2(0, 10), Color.White);
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
+
+            Game1.getInstance().getSpriteBatch().DrawString(scoreSF, "Score: " + score, new Vector2(570, 10), Color.Red);
         }
 
        public Vector3 Look()

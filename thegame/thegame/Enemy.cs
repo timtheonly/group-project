@@ -95,6 +95,7 @@ namespace thegame
                 Bullet tempBullet = Game1.getInstance().getBullet(i);
                 if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Player)
                 {
+                    Score();
                     alive = false;
                     tempBullet.setAlive(false);
                 }
@@ -121,7 +122,6 @@ namespace thegame
         
         public override void Draw(GameTime gameTime)
         {
-
             base.Draw(gameTime);
         }
     }
