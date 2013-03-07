@@ -24,8 +24,8 @@ namespace thegame
         private const float radarRange = 500.0f;
         private const float radarRangeSquared = radarRange * radarRange;
 
-        private const float radarScreenRadius = 40.0f;
-        private static Vector2 radarCenterPos = new Vector2(750, 400);
+        private const float radarScreenRadius = 61.0f;
+        private static Vector2 radarCenterPos = new Vector2(700, 400);
         private Vector2 imageCenter;
         private Vector2 differanceVect;
 

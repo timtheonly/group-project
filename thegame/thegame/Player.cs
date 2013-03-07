@@ -47,7 +47,7 @@ namespace thegame
         public Player(Vector3 pos)
         {
             this.pos = pos;
-            health = 10;
+            health = 4;
             hitCount = 0;
             bs = new BoundingSphere(pos, 2f);
         }
@@ -122,6 +122,9 @@ namespace thegame
                     alive = false;
                     tempBullet.setAlive(false);
                     hitCount++;
+                    health --;
+
+            
                 }
             }
 
@@ -153,20 +156,21 @@ namespace thegame
 
         public override void Draw(GameTime gameTime)
         {
-            if (health < 80 && health > 50)
+            if (health == 100)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer1, new Vector2(0, 0), Color.White);
             }
-            if (health < 50 &&  health > 30)
+            if (health == 100)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer2, new Vector2(0, 0), Color.White);
             }
-            if (health < 30)
+            if (health == 100)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
+
             
-            Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "location: x: " + pos.X + " y: "+ pos.Y + "Z: " + pos.Z, new Vector2(0, 0), Color.White);
+            Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "location: x: " + pos.X + " y: "+ pos.Y + "Z: " + pos.Z + "hit" + hitCount, new Vector2(0, 0), Color.White);
             Game1.getInstance().getSpriteBatch().DrawString(collisionSF, collisionString, new Vector2(0, 10), Color.White);
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
 

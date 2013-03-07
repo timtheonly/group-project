@@ -52,7 +52,7 @@ namespace thegame
 
         public override void Draw(GameTime gameTime)
         {
-            world = Matrix.CreateScale(2.961f, 2.961f, 2.961f) * Matrix.CreateTranslation(pos);
+            world = Matrix.CreateScale(10.961f, 10.961f, 10.961f) * Matrix.CreateTranslation(pos);
             base.Draw(gameTime);
         }
     }
