@@ -16,7 +16,7 @@ namespace thegame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.CullClockwiseFace, FillMode = FillMode.WireFrame };
+        RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.CullClockwiseFace, FillMode = FillMode.WireFrame};
         private GraphicsDeviceManager graphics;
         public GraphicsDeviceManager getGraphics()
         {
@@ -105,7 +105,7 @@ namespace thegame
            
             plyr = new Player(new Vector3(0,0,50));
             radar = new Radar();
-            enemy = new Enemy(new Vector3(0, 0, -30));
+            enemy = new Enemy(new Vector3(0, -1.5f, -30));
            
             for (int num = 0; num < 20; num++)
             {
@@ -200,11 +200,11 @@ namespace thegame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.SlateGray);
             GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
             GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
-            // TODO: Add your drawing code here
+            //TODO: Add your drawing code here
             foreach (Bullet bullet in _bullets)
             {
                 bullet.Draw(gameTime);

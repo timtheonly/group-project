@@ -22,7 +22,9 @@ namespace thegame
         protected float spinY;
         protected float spinZ;
         protected bool alive;
-        protected float health;
+        protected int health;
+
+
         protected static int score;
 
         public void Score()
