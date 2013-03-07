@@ -105,9 +105,6 @@ namespace thegame
             //obstacles spawn in random locations
             Random rand = new Random();
 
-          
-            
-           
             for (int num = 0; num < 20; num++)
             {
                 int x = rand.Next(-100, 500);
@@ -119,7 +116,6 @@ namespace thegame
                 {
                     _obstacles.Add(tempObstacle);
                 }
-                
             }
         
 
@@ -238,7 +234,7 @@ namespace thegame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(40, 	40, 	40));
+            GraphicsDevice.Clear(new Color(40, 	40,  40));
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
             spriteBatch.End();

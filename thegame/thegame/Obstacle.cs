@@ -47,6 +47,10 @@ namespace thegame
                 {
                     tempBullet.setAlive(false);
                 }
+                if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Enemy)
+                {
+                    tempBullet.setAlive(false);
+                }
             }
         }
 
