@@ -63,6 +63,7 @@ namespace thegame
                 Game1.getInstance().setBullet(tempBullet);
                 Shoot.Play();
                 lastShot = 0;
+                forward(2);
             }
             
             
@@ -70,10 +71,6 @@ namespace thegame
 
             //center the bounding sphere on the tanks position
             bs.Center = pos;
-            //uncomment the following and the model will spin::
-            //float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //spinY += timeDelta;
-
 
            
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
@@ -87,7 +84,6 @@ namespace thegame
                 Bullet tempBullet = Game1.getInstance().getBullet(i);
                 if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Player)
                 {
-                    
                     health--;
                     Hit.Play();
                     if (health == 0)
@@ -97,13 +93,11 @@ namespace thegame
                         dying = true;
                     }
                     tempBullet.setAlive(false);
-                   
                 }
                 if (dying)
                 {  
                     break;
                 }
-
             }
 
             if (dying)

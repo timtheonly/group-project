@@ -42,7 +42,7 @@ namespace thegame
             
         }
 
-        public void forward(int speed)
+        public void forward(float speed)
         {
             pos += look * speed;
         }
