@@ -21,10 +21,12 @@ namespace thegame
     public  class Enemy : MoveableEntity
     {
         float lastShot=  0.0f;
+        
         bool dying = false;
         
         public Enemy(Vector3 pos):base()
         {
+            health = 3;
             this.pos = pos;
             //Do NOT CHANGE spinX 
             spinX = 29.86f;
@@ -56,16 +58,13 @@ namespace thegame
             if (lastShot > 2f && !dying)
             {
                 //add offset to bullet to position it near the barrell of the tank
-                Bullet tempBullet = new Bullet(this, pos + (world.Left *-8.5f)+ (world.Forward * -10), (Game1.getInstance().getPlayer().Look()) * -1);
+                Bullet tempBullet = new Bullet(this, pos + (world.Left *-9.5f)+ (world.Forward * -22), (Game1.getInstance().getPlayer().Look()) * -1);
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 Shoot.Play();
                 lastShot = 0;
             }
-            if(dying)
-            {
-                pos -= up;
-            }
+            
             
             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -88,11 +87,29 @@ namespace thegame
                 Bullet tempBullet = Game1.getInstance().getBullet(i);
                 if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Player)
                 {
-                    Score();
                     
-                    dying = true;
+                    health--;
+                    Hit.Play();
+                    if (health == 0)
+                    {
+                        
+                        EnemyDying.Play();
+                        dying = true;
+                    }
                     tempBullet.setAlive(false);
+                   
                 }
+                if (dying)
+                {  
+                    break;
+                }
+
+            }
+
+            if (dying)
+            {
+                
+                pos -= up;
             }
 
             //check for collisions with obstacles
@@ -101,7 +118,7 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    backward();
+                    backward(1.0f);
                 }
             }
 

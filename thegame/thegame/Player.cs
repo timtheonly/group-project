@@ -47,7 +47,7 @@ namespace thegame
         public Player(Vector3 pos)
         {
             this.pos = pos;
-            health = 4;
+            health = 8;
             hitCount = 0;
             bs = new BoundingSphere(pos, 2f);
         }
@@ -83,18 +83,18 @@ namespace thegame
             }
 
             //move camera forward and back
-            if (currentState.ThumbSticks.Right.Y > 0 || keyState.IsKeyDown(Keys.Up))
+            if (currentState.ThumbSticks.Left.Y > 0 || keyState.IsKeyDown(Keys.Up))
             {
-                forward();
+                forward(1);
             }
 
-            if (currentState.ThumbSticks.Right.Y < 0 || keyState.IsKeyDown(Keys.Down))
+            if (currentState.ThumbSticks.Left.Y < 0 || keyState.IsKeyDown(Keys.Down))
             {
-                backward();
+                backward(0.35f);
             }
             
             // limit the amount of bullets that can be spawned with last shot
-            if ((currentState.Triggers.Left >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
+            if ((currentState.Triggers.Right >0||keyState.IsKeyDown(Keys.Space)) && lastShot > 0.9)
             {
                 //add offset to the bullet vector3 to center it in the crosshairs
                 Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), look);
@@ -119,12 +119,11 @@ namespace thegame
                 Bullet tempBullet = Game1.getInstance().getBullet(i);
                 if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Enemy)
                 {
+                    GettingHit.Play();
                     alive = false;
                     tempBullet.setAlive(false);
                     hitCount++;
                     health --;
-
-            
                 }
             }
 
@@ -137,14 +136,14 @@ namespace thegame
                     Crash.Play();
 
                     collisionString = "collision: x: " + tempObstacle.getPos().X + " y: " + tempObstacle.getPos().Y + " Z: " + tempObstacle.getPos().Z;
-                    if (currentState.ThumbSticks.Right.Y > 0 || keyState.IsKeyDown(Keys.Up))
+                    if (currentState.ThumbSticks.Left.Y > 0 || keyState.IsKeyDown(Keys.Up))
                     {
-                        backward();
+                        backward(1.0f);
                     }
 
-                    if (currentState.ThumbSticks.Right.Y < 0 || keyState.IsKeyDown(Keys.Down))
+                    if (currentState.ThumbSticks.Left.Y < 0 || keyState.IsKeyDown(Keys.Down))
                     {
-                        forward();
+                        forward(1);
                     }
                 }
             }
@@ -156,15 +155,15 @@ namespace thegame
 
         public override void Draw(GameTime gameTime)
         {
-            if (health == 3)
+            if (health <= 6 && health >= 4)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer1, new Vector2(0, 0), Color.White);
             }
-            if (health == 2)
+            if (health <= 4 && health >= 2)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer2, new Vector2(0, 0), Color.White);
             }
-            if (health == 1)
+            if (health <= 2 && health >= 0)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
@@ -188,5 +187,15 @@ namespace thegame
        {
            return spinY;
        }
+
+       protected static int score;
+
+       public void Score(int value)
+       {
+           score += 1000 * value;
+
+       }
+
+
     }
 }

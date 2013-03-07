@@ -19,6 +19,8 @@ namespace thegame
         RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.CullClockwiseFace, FillMode = FillMode.WireFrame};
         private GraphicsDeviceManager graphics;
         private Texture2D background;
+        private int level = 1;
+        private int v = 1;
         public GraphicsDeviceManager getGraphics()
         {
             return graphics;
@@ -95,7 +97,7 @@ namespace thegame
             // TODO: Add your initialization logic here
             _bullets = new List<Bullet>();
             _obstacles = new List<Obstacle>();
-            enemy = new Enemy(new Vector3(0,0,-30));
+            enemy = new Enemy(new Vector3(0, -3f, -30));
             plyr = new Player(new Vector3(0,0,50));
             radar = new Radar();
             //boom = new Explosion(new Vector3(0,0,-10));
@@ -103,15 +105,13 @@ namespace thegame
             //obstacles spawn in random locations
             Random rand = new Random();
 
-           
-            plyr = new Player(new Vector3(0,0,50));
-            radar = new Radar();
-            enemy = new Enemy(new Vector3(0, -3f, -30));
+          
+            
            
             for (int num = 0; num < 20; num++)
             {
-                int x = rand.Next(-200, 200);
-                int z = rand.Next(-200, 200);
+                int x = rand.Next(-100, 500);
+                int z = rand.Next(-100, 500);
                 
                 //draw obstacle if it does not spawn on an enemy or the player
                 Obstacle tempObstacle = (new Obstacle(new Vector3(x, 0, z)));
@@ -175,6 +175,41 @@ namespace thegame
             {
                 enemy.Update(gameTime);
             }
+            else
+            {
+                if (level == 1)
+                {
+                    v = v + plyr.health;
+                }
+
+                level++;
+                plyr.health +=2;
+                plyr.Score(v);
+                enemy = new Enemy(new Vector3(0, -3f, -30));
+                enemy.LoadContent();
+                
+                if (level == 2)
+                {
+
+                    v = 2;
+                    if (plyr.health > 0)
+                    {
+                        v = plyr.health + v;
+                    }
+                    enemy.health += 3;
+                }
+                if (level == 3)
+                {
+
+                    v = 4;
+                    if (plyr.health > 0)
+                    {
+                        v = plyr.health + v;
+                    }
+                    enemy.health += 3;
+                }
+            }
+            
             // TODO: Add your update logic here
             radar.Update(gameTime);
             plyr.Update(gameTime);

@@ -22,15 +22,14 @@ namespace thegame
         protected float spinY;
         protected float spinZ;
         protected bool alive;
-        protected int health;
-
-
-        protected static int score;
-
-        public void Score()
+        protected int _health;
+        public int health
         {
-            score += 1000;
+            get{return _health;}
+            set {this._health = value; }
+            
         }
+
 
         public MoveableEntity()
         {
@@ -43,14 +42,14 @@ namespace thegame
             
         }
 
-        public void forward()
+        public void forward(int speed)
         {
-            pos += look;
+            pos += look * speed;
         }
 
-        public void backward()
+        public void backward(float speed)
         {
-            pos -= look;
+            pos -= look * speed;
         }
         protected void yaw( float angle)
         {
