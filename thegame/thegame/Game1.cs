@@ -36,12 +36,6 @@ namespace thegame
             return plyr;
         }
 
-        protected Explosion boom;
-        public Explosion getExplosion()
-        {
-            return boom;
-        }
-
         private Enemy enemy;
         public Enemy getEnemy()
         {
@@ -127,7 +121,6 @@ namespace thegame
                 }
                 
             }
-            boom = new Explosion(new Vector3(0,0,0));
         
 
             base.Initialize();
@@ -201,7 +194,6 @@ namespace thegame
             {
                 obstacle.Update(gameTime);
             }
-            boom.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -237,7 +229,6 @@ namespace thegame
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             radar.Draw(gameTime);
-            boom.Draw(gameTime);
             spriteBatch.End();
          
            

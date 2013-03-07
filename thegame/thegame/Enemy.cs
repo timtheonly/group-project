@@ -21,7 +21,7 @@ namespace thegame
     public  class Enemy : MoveableEntity
     {
         float lastShot=  0.0f;
-        Random randomSpeed = new Random();
+        bool dying = false;
         
         public Enemy(Vector3 pos):base()
         {
@@ -32,6 +32,7 @@ namespace thegame
             //spinZ = -50.0f;
             look = new Vector3(0,0,1);
             world = Matrix.Identity;
+            
         }
 
         public override void LoadContent()
@@ -52,7 +53,7 @@ namespace thegame
         {
             Vector3 direction = Game1.getInstance().getPlayer().getPos() - pos;
             direction.Normalize();
-            if (lastShot > 2f)
+            if (lastShot > 2f && !dying)
             {
                 //add offset to bullet to position it near the barrell of the tank
                 Bullet tempBullet = new Bullet(this, pos + (world.Left *-8.5f)+ (world.Forward * -10), (Game1.getInstance().getPlayer().Look()) * -1);
@@ -61,22 +62,15 @@ namespace thegame
                 Shoot.Play();
                 lastShot = 0;
             }
+            if(dying)
+            {
+                pos -= up;
+            }
             
             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //center the bounding sphere on the tanks position
             bs.Center = pos;
-            KeyboardState keyState = Keyboard.GetState();
-            if(keyState.IsKeyDown(Keys.A))
-            {
-                yaw(MathHelper.ToRadians(0.5f));
-                spinY += MathHelper.ToRadians(0.5f);
-            }
-
-            if (keyState.IsKeyDown(Keys.W))
-            {
-                forward();
-            }
             //uncomment the following and the model will spin::
             //float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //spinY += timeDelta;
@@ -95,7 +89,8 @@ namespace thegame
                 if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Player)
                 {
                     Score();
-                    alive = false;
+                    
+                    dying = true;
                     tempBullet.setAlive(false);
                 }
             }
@@ -116,9 +111,18 @@ namespace thegame
                 alive = false;
             }
         }
-        
+        int timesShown = 0;
         public override void Draw(GameTime gameTime)
         {
+            
+            if(dying)
+            {
+                timesShown++;
+            }
+            if (timesShown > 100)
+            {
+                alive = false;
+            }
             base.Draw(gameTime);
         }
     }
