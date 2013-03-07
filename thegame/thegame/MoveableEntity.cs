@@ -24,7 +24,9 @@ namespace thegame
         protected bool alive;
         protected int health;
 
+
         protected static int score;
+
         public void Score()
         {
             score += 1000;

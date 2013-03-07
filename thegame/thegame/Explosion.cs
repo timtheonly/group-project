@@ -16,6 +16,7 @@ namespace thegame
         public Explosion(Vector3 pos)
         {
             this.pos = pos;
+            look = new Vector3(-1, 0, 0);
         }
 
         public override void LoadContent()
@@ -29,18 +30,18 @@ namespace thegame
             float speed = 50.0f;
             float timeDelta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if ((pos.X < -(width / 2)) || (pos.X > width / 2) || (pos.Z < -(height / 2)) || (pos.Z > height / 2) || (pos.Y < 0) || (pos.Y > 100))
-            {
-                alive = false;
-            }
+ 
+            
             pos += look * speed * timeDelta;
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Line.DrawLine(pos, pos + look * 5, Color.Green);
-            //Line.DrawLine(pos, pos + look * 5, Color.Green);
-            //Line.DrawLine(pos, pos + look * 5, Color.Green);
+
+            for (int i = 0; i < 5; i++)
+            {
+                Line.DrawLine(pos, pos + look * 3, Color.Green);
+            }
         }
     }
 }

@@ -175,6 +175,8 @@ namespace thegame
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
 
             Game1.getInstance().getSpriteBatch().DrawString(scoreSF, "Score: " + score, new Vector2(570, 10), Color.Red);
+
+            
         }
 
        public Vector3 Look()
