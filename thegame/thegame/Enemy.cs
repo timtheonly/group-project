@@ -29,7 +29,7 @@ namespace thegame
             //Do NOT CHANGE spinX 
             spinX = 29.86f;
             spinY = 89.5f;
-            //spinZ = 90;
+            //spinZ = -50.0f;
             look = new Vector3(0,0,1);
             world = Matrix.Identity;
         }

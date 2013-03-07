@@ -18,6 +18,7 @@ namespace thegame
     {
         RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.CullClockwiseFace, FillMode = FillMode.WireFrame};
         private GraphicsDeviceManager graphics;
+        private Texture2D background;
         public GraphicsDeviceManager getGraphics()
         {
             return graphics;
@@ -111,7 +112,7 @@ namespace thegame
            
             plyr = new Player(new Vector3(0,0,50));
             radar = new Radar();
-            enemy = new Enemy(new Vector3(0, -1.5f, -30));
+            enemy = new Enemy(new Vector3(0, -3f, -30));
            
             for (int num = 0; num < 20; num++)
             {
@@ -140,6 +141,7 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
 
             foreach (Obstacle obstacle in _obstacles)
             {
@@ -153,6 +155,7 @@ namespace thegame
             radar.LoadContent();
             enemy.LoadContent();
             plyr.LoadContent();
+            background = Game1.getInstance().Content.Load<Texture2D>("textures\\background");
             // TODO: use this.Content to load your game content here
         }
 
@@ -208,11 +211,16 @@ namespace thegame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.SlateGray);
+            GraphicsDevice.Clear(new Color(40, 	40, 	40));
+            spriteBatch.Begin();
+            spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
+            spriteBatch.End();
             GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
             GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             //TODO: Add your drawing code here
+            
+
             foreach (Bullet bullet in _bullets)
             {
                 bullet.Draw(gameTime);
@@ -225,6 +233,7 @@ namespace thegame
             {
                 enemy.Draw(gameTime);
             }
+
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             radar.Draw(gameTime);

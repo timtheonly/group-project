@@ -156,15 +156,15 @@ namespace thegame
 
         public override void Draw(GameTime gameTime)
         {
-            if (health == 100)
+            if (health == 3)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer1, new Vector2(0, 0), Color.White);
             }
-            if (health == 100)
+            if (health == 2)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer2, new Vector2(0, 0), Color.White);
             }
-            if (health == 100)
+            if (health == 1)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
