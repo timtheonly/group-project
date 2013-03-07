@@ -115,7 +115,7 @@ namespace thegame
             radar = new Radar();
             enemy = new Enemy(new Vector3(0, 0, -30));
            
-            //boom = new Explosion(new Vector3(0,0,-10));
+            boom = new Explosion(new Vector3(0,0,0));
 
 
             base.Initialize();
@@ -187,6 +187,7 @@ namespace thegame
             {
                 obstacle.Update(gameTime);
             }
+            boom.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -198,7 +199,6 @@ namespace thegame
         {
             GraphicsDevice.Clear(Color.Black);
             GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
-
             GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
             // TODO: Add your drawing code here
@@ -217,7 +217,7 @@ namespace thegame
             spriteBatch.Begin();
             plyr.Draw(gameTime);
             radar.Draw(gameTime);
-            //boom.Draw(gameTime);
+            boom.Draw(gameTime);
             spriteBatch.End();
          
            
