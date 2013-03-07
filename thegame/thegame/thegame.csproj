@@ -109,9 +109,7 @@
   <ItemGroup>
     <Compile Include="Bullet.cs" />
     <Compile Include="Enemy.cs" />
-    <Compile Include="Explosion.cs" />
     <Compile Include="GameEntity.cs" />
-    <Compile Include="Line.cs" />
     <Compile Include="MoveableEntity.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="Player.cs" />
