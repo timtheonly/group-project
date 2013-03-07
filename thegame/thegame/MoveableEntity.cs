@@ -23,8 +23,8 @@ namespace thegame
         protected float spinZ;
         protected bool alive;
         protected float health;
-
         protected static int score;
+
         public void Score()
         {
             score += 1000;

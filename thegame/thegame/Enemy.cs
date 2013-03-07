@@ -50,7 +50,6 @@ namespace thegame
 
         public override void Update(GameTime gameTime)
         {
-
             Vector3 direction = Game1.getInstance().getPlayer().getPos() - pos;
             direction.Normalize();
             if (lastShot > 2f)
@@ -62,8 +61,8 @@ namespace thegame
                 Shoot.Play();
                 lastShot = 0;
             }
-
-             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //center the bounding sphere on the tanks position
             bs.Center = pos;
@@ -101,9 +100,8 @@ namespace thegame
                 }
             }
 
-
             //check for collisions with obstacles
-            for (int i = 0; i < Game1.getInstance().getNumObstacles(); i++)
+            for(int i = 0; i < Game1.getInstance().getNumObstacles(); i++)
             {
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
@@ -111,7 +109,6 @@ namespace thegame
                     backward();
                 }
             }
-
 
             //check for collisions with player
             if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()))

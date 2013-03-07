@@ -81,7 +81,6 @@ namespace thegame
         {
             return instance;
         }
-       
 
         public Game1()
         {
@@ -101,22 +100,26 @@ namespace thegame
             // TODO: Add your initialization logic here
             _bullets = new List<Bullet>();
             _obstacles = new List<Obstacle>();
+            enemy = new Enemy(new Vector3(0,0,-30));
+            plyr = new Player(new Vector3(0,0,50));
+            radar = new Radar();
+            //boom = new Explosion(new Vector3(0,0,-10));
 
-            //Random obstacles. Obstacles have a possibility of spawning on each other. Looking for a fix
+            //obstacles spawn in random locations
             Random rand = new Random();
             for (int num = 0; num < 20; num++)
             {
                 int x = rand.Next(-200, 200);
                 int z = rand.Next(-200, 200);
-                _obstacles.Add(new Obstacle(new Vector3(x, 0, z)));
-            }
-           
-            plyr = new Player(new Vector3(0,0,50));
-            radar = new Radar();
-            enemy = new Enemy(new Vector3(0, 0, -30));
-           
-            //boom = new Explosion(new Vector3(0,0,-10));
 
+                //draw obstacle if it does not spawn on an enemy or the player
+                Obstacle tempObstacle = (new Obstacle(new Vector3(x, 0, z)));
+                if (!tempObstacle.collidesWith(enemy.getBoundingSphere(), enemy.getWorld()) && !tempObstacle.collidesWith(plyr.getBoundingSphere(), plyr.getWorld()))
+                {
+                    _obstacles.Add(tempObstacle);
+                }
+
+            }
 
             base.Initialize();
         }
@@ -129,7 +132,7 @@ namespace thegame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             foreach (Obstacle obstacle in _obstacles)
             {
                 obstacle.LoadContent();
