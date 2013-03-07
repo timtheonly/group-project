@@ -196,6 +196,11 @@ namespace thegame
 
        }
 
+       public int getScore()
+       {
+           return score; 
+       }
+
 
     }
 }

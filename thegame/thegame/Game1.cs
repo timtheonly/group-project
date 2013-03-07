@@ -19,6 +19,11 @@ namespace thegame
         RasterizerState WIREFRAME_RASTERIZER_STATE = new RasterizerState() { CullMode = CullMode.CullClockwiseFace, FillMode = FillMode.WireFrame};
         private GraphicsDeviceManager graphics;
         private Texture2D background;
+        private Texture2D startMenu;
+        private Texture2D pauseMenu;
+        private Texture2D endMenu;
+        private SpriteFont scoreSF;
+
         private int level = 1;
         private int v = 1;
         public GraphicsDeviceManager getGraphics()
@@ -79,6 +84,16 @@ namespace thegame
             return instance;
         }
 
+        enum ScreenState
+        { 
+            Start,
+            End,
+            Pause,
+            Play
+        }
+
+        ScreenState currentState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -121,8 +136,8 @@ namespace thegame
                 }
                 
             }
-        
 
+            currentState = ScreenState.Start;
             base.Initialize();
         }
 
@@ -148,7 +163,11 @@ namespace thegame
             radar.LoadContent();
             enemy.LoadContent();
             plyr.LoadContent();
-            background = Game1.getInstance().Content.Load<Texture2D>("textures\\background");
+            background = Content.Load<Texture2D>("textures\\background");
+            startMenu = Content.Load<Texture2D>("textures\\startMenu");
+            endMenu = Content.Load<Texture2D>("textures\\endMenu");
+            pauseMenu = Content.Load<Texture2D>("textures\\pauseMenu");
+            scoreSF = Content.Load<SpriteFont>("score");
             // TODO: use this.Content to load your game content here
         }
 
@@ -171,63 +190,109 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            if (enemy.isAlive())
-            {
-                enemy.Update(gameTime);
-            }
-            else
-            {
-                if (level == 1)
-                {
-                    v = v + plyr.health;
-                }
 
-                level++;
-                plyr.health +=2;
-                plyr.Score(v);
-                enemy = new Enemy(new Vector3(0, -3f, -30));
-                enemy.LoadContent();
-                
-                if (level == 2)
-                {
-
-                    v = 2;
-                    if (plyr.health > 0)
+            switch (currentState)
+            {
+                case ScreenState.Start:
                     {
-                        v = plyr.health + v;
-                    }
-                    enemy.health += 3;
-                }
-                if (level == 3)
-                {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        {
+                            currentState = ScreenState.Play;
 
-                    v = 4;
-                    if (plyr.health > 0)
+                        }
+                        
+                        break;
+                    }
+
+                case ScreenState.Pause:
                     {
-                        v = plyr.health + v;
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        {
+                            currentState = ScreenState.Play;
+                        }
+                        break;
                     }
-                    enemy.health += 3;
-                }
-            }
-            
-            // TODO: Add your update logic here
-            radar.Update(gameTime);
-            plyr.Update(gameTime);
-            for (int i = 0; i < _bullets.Count;i++ )
-            {
-                if (_bullets[i].isAlive())
-                {
-                    _bullets[i].Update(gameTime);
-                }
-                else
-                {
-                    _bullets.RemoveAt(i);
-                }
-            }
+                case ScreenState.End:
+                    {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        {
+                            currentState = ScreenState.Start;
+                            level = 1;
+                            plyr = new Player(new Vector3(0, 0, 50));
+                        }
+                        break;
+                    }
+                case ScreenState.Play:
+                    {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        {
+                            currentState = ScreenState.Pause;
+                        }
+                        if (enemy.isAlive())
+                        {
+                            enemy.Update(gameTime);
+                        }
+                        else
+                        {
+                            if (level == 1)
+                            {
+                                v = v + plyr.health;
+                            }
 
-            foreach (Obstacle obstacle in _obstacles)
-            {
-                obstacle.Update(gameTime);
+                            level++;
+                            plyr.health += 2;
+                            plyr.Score(v);
+                            enemy = new Enemy(new Vector3(0, -3f, -30));
+                            enemy.LoadContent();
+
+                            if (level == 2)
+                            {
+
+                                v = 2;
+                                if (plyr.health > 0)
+                                {
+                                    v = plyr.health + v;
+                                }
+                                enemy.health += 3;
+                            }
+                            if (level == 3)
+                            {
+
+                                v = 4;
+                                if (plyr.health > 0)
+                                {
+                                    v = plyr.health + v;
+                                }
+                                enemy.health += 3;
+                            }
+                            if (level > 3)
+                            {
+                                currentState = ScreenState.End;
+                            }
+                        }
+
+
+                        // TODO: Add your update logic here
+                        radar.Update(gameTime);
+                        plyr.Update(gameTime);
+                        for (int i = 0; i < _bullets.Count; i++)
+                        {
+                            if (_bullets[i].isAlive())
+                            {
+                                _bullets[i].Update(gameTime);
+                            }
+                            else
+                            {
+                                _bullets.RemoveAt(i);
+                            }
+                        }
+
+                        foreach (Obstacle obstacle in _obstacles)
+                        {
+                            obstacle.Update(gameTime);
+                        }
+                        break;
+                    }
             }
             base.Update(gameTime);
         }
@@ -239,34 +304,65 @@ namespace thegame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(40, 	40, 	40));
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
-            spriteBatch.End();
-            GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
-            GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
+                        
+            switch (currentState)
+            {
+                case ScreenState.Play:
+                    {
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
+                        spriteBatch.End();
+                        GraphicsDevice.RasterizerState = WIREFRAME_RASTERIZER_STATE;    // draw in wireframe
+                        GraphicsDevice.BlendState = BlendState.Opaque;                  // no alpha this time
 
-            //TODO: Add your drawing code here
+                        //TODO: Add your drawing code here
             
 
-            foreach (Bullet bullet in _bullets)
-            {
-                bullet.Draw(gameTime);
-            }
-            foreach (Obstacle obstacle in _obstacles)
-            {
-                obstacle.Draw(gameTime);
-            }
-            if (enemy.isAlive())
-            {
-                enemy.Draw(gameTime);
-            }
+                        foreach (Bullet bullet in _bullets)
+                        {
+                            bullet.Draw(gameTime);
+                        }
+                        foreach (Obstacle obstacle in _obstacles)
+                        {
+                            obstacle.Draw(gameTime);
+                        }
+                        if (enemy.isAlive())
+                        {
+                            enemy.Draw(gameTime);
+                        }
 
-            spriteBatch.Begin();
-            plyr.Draw(gameTime);
-            radar.Draw(gameTime);
-            spriteBatch.End();
-         
-           
+                        spriteBatch.Begin();
+                        plyr.Draw(gameTime);
+                        radar.Draw(gameTime);
+                        spriteBatch.End();
+                        break;
+                    }
+
+                case ScreenState.Start:
+                    {
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(startMenu, new Vector2(0, 0), Color.White);
+                        spriteBatch.End();
+                        break;
+                    }
+
+                case ScreenState.End:
+                    {
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(endMenu, new Vector2(0, 0), Color.White);
+                        spriteBatch.DrawString(scoreSF, "Score: " + plyr.getScore(), new Vector2(320, 250), Color.White);
+                        spriteBatch.End();
+                        break;
+                    }
+
+                case ScreenState.Pause:
+                    {
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(pauseMenu, new Vector2(0, 0), Color.White);
+                        spriteBatch.End();
+                        break;
+                    }
+            }
             base.Draw(gameTime);
         }
     }
