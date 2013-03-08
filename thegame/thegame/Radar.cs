@@ -45,7 +45,7 @@ namespace thegame
             imageCenter = new Vector2(radarLayer.Width * 0.5f, radarLayer.Height * 0.5f);
         }
 
-        public  void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             differanceVect = new Vector2(Game1.getInstance().getEnemy().getPos().X - Game1.getInstance().getPlayer().getPos().X, Game1.getInstance().getEnemy().getPos().Z - Game1.getInstance().getPlayer().getPos().Z);
             float distance = differanceVect.LengthSquared();

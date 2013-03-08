@@ -22,7 +22,10 @@ namespace thegame
         private Texture2D startMenu;
         private Texture2D pauseMenu;
         private Texture2D endMenu;
+        private Texture2D levelMenu;
         private SpriteFont scoreSF;
+        private SpriteFont levelSF;
+
         private KeyboardState lastKeyState;
         private GamePadState lastpadState;
 
@@ -91,7 +94,8 @@ namespace thegame
             Start,
             End,
             Pause,
-            Play
+            Play,
+            Level
         }
 
         ScreenState currentState;
@@ -167,7 +171,9 @@ namespace thegame
             startMenu = Content.Load<Texture2D>("textures\\startMenu");
             endMenu = Content.Load<Texture2D>("textures\\endMenu");
             pauseMenu = Content.Load<Texture2D>("textures\\pauseMenu");
+            levelMenu = Content.Load<Texture2D>("textures\\levelMenu");
             scoreSF = Content.Load<SpriteFont>("score");
+            levelSF = Content.Load<SpriteFont>("level");
             // TODO: use this.Content to load your game content here
         }
 
@@ -194,27 +200,20 @@ namespace thegame
             GamePadState  currentPadState = GamePad.GetState(PlayerIndex.One);
             switch (currentState)
             {
+                case ScreenState.Level:
+                    {
+                        waitForKeyPress();
+                        break;
+                    }
                 case ScreenState.Start:
                     {
-                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
-                        {
-                            currentState = ScreenState.Play;
-
-                        }
-                        lastKeyState = currentKeyState;
-                        lastpadState = currentPadState;
+                        waitForKeyPress();
                         break;
                     }
 
                 case ScreenState.Pause:
                     {
-                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
-                        {
-                            currentState = ScreenState.Play;
-
-                        }
-                        lastKeyState = currentKeyState;
-                        lastpadState = currentPadState;
+                        waitForKeyPress();
                         break;
                     }
                 case ScreenState.End:
@@ -232,12 +231,7 @@ namespace thegame
                     }
                 case ScreenState.Play:
                     {
-                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
-                        {
-                            currentState = ScreenState.Pause;
-                        }
-                        lastKeyState = currentKeyState;
-                        lastpadState = currentPadState;
+                        waitForKeyPress();
                         if (!plyr.isAlive())
                         {
                             currentState = ScreenState.End;
@@ -261,7 +255,7 @@ namespace thegame
 
                             if (level == 2)
                             {
-
+                                currentState = ScreenState.Level;
                                 v = 2;
                                 if (plyr.health > 0)
                                 {
@@ -271,7 +265,7 @@ namespace thegame
                             }
                             if (level == 3)
                             {
-
+                                currentState = ScreenState.Level;
                                 v = 4;
                                 if (plyr.health > 0)
                                 {
@@ -365,7 +359,7 @@ namespace thegame
                     {
                         spriteBatch.Begin();
                         spriteBatch.Draw(endMenu, new Vector2(0, 0), Color.White);
-                        spriteBatch.DrawString(scoreSF, "Score: " + plyr.getScore(), new Vector2(320, 250), Color.White);
+                        spriteBatch.DrawString(scoreSF, "Score: " + plyr.getScore(), new Vector2(280, 250), Color.White);
                         spriteBatch.End();
                         break;
                     }
@@ -377,8 +371,32 @@ namespace thegame
                         spriteBatch.End();
                         break;
                     }
+
+                case ScreenState.Level:
+                    {
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(levelMenu, new Vector2(0, 0), Color.White);
+                        spriteBatch.DrawString(levelSF, ""+level, new Vector2(350, 85), Color.White);
+                        spriteBatch.End();
+                        break;
+                    
+                    
+                    }
             }
             base.Draw(gameTime);
+        }
+
+        private void waitForKeyPress()
+        {
+            KeyboardState currentKeyState = Keyboard.GetState();
+            GamePadState currentPadState = GamePad.GetState(PlayerIndex.One);
+            if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
+            {
+                currentState = ScreenState.Play;
+
+            }
+            lastKeyState = currentKeyState;
+            lastpadState = currentPadState;
         }
     }
 }
