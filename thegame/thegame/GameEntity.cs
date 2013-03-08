@@ -51,9 +51,9 @@ namespace thegame
         {
             Shoot = Game1.getInstance().Content.Load<SoundEffect>("sounds\\shotbetter"); //load sound
             Crash = Game1.getInstance().Content.Load<SoundEffect>("sounds\\crash");
-            Hit = Game1.getInstance().Content.Load<SoundEffect>("sounds\\crash");
-            GettingHit = Game1.getInstance().Content.Load<SoundEffect>("sounds\\crash");
-            EnemyDying = Game1.getInstance().Content.Load<SoundEffect>("sounds\\crash");
+            Hit = Game1.getInstance().Content.Load<SoundEffect>("sounds\\HitingEnemy");
+            GettingHit = Game1.getInstance().Content.Load<SoundEffect>("sounds\\explosion");
+            EnemyDying = Game1.getInstance().Content.Load<SoundEffect>("sounds\\EnemyDeath");
         }
         public virtual void Update(GameTime gameTime)
         {

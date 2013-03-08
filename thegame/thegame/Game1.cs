@@ -25,6 +25,7 @@ namespace thegame
         private SpriteFont scoreSF;
         private KeyboardState lastKeyState;
         private GamePadState lastpadState;
+        public Song BackgroundSong;
 
         private int level = 1;
         private int v = 1;
@@ -122,7 +123,7 @@ namespace thegame
             //obstacles spawn in random locations
             Random rand = new Random();
 
-            for (int num = 0; num < 20; num++)
+            for (int num = 0; num < 100; num++)
             {
                 int x = rand.Next(-100, 500);
                 int z = rand.Next(-100, 500);
@@ -168,6 +169,10 @@ namespace thegame
             endMenu = Content.Load<Texture2D>("textures\\endMenu");
             pauseMenu = Content.Load<Texture2D>("textures\\pauseMenu");
             scoreSF = Content.Load<SpriteFont>("score");
+
+            BackgroundSong = Content.Load<Song>("sounds\\Menu1");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(BackgroundSong);
             // TODO: use this.Content to load your game content here
         }
 
@@ -201,6 +206,7 @@ namespace thegame
                             currentState = ScreenState.Play;
 
                         }
+                        ;
                         lastKeyState = currentKeyState;
                         lastpadState = currentPadState;
                         break;
@@ -236,6 +242,7 @@ namespace thegame
                         {
                             currentState = ScreenState.Pause;
                         }
+                        BackgroundSong = Content.Load<Song>("sounds\\MainGame");
                         lastKeyState = currentKeyState;
                         lastpadState = currentPadState;
                         if (!plyr.isAlive())
