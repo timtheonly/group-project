@@ -27,7 +27,6 @@ namespace thegame
         {
             get{return _health;}
             set {this._health = value; }
-            
         }
 
 
@@ -39,7 +38,6 @@ namespace thegame
             spinY = 0.0f;
             spinZ = 0.0f;
             alive = true;
-            
         }
 
         public void forward(float speed)
@@ -60,6 +58,5 @@ namespace thegame
         {
             return alive;
         }
-
     }
 }

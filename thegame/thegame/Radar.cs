@@ -18,8 +18,6 @@ namespace thegame
         private Texture2D enemyDot;
         private Texture2D radarLayer;
 
-
-
         // Distance that the radar can
         private const float radarRange = 500.0f;
         private const float radarRangeSquared = radarRange * radarRange;
@@ -32,7 +30,6 @@ namespace thegame
 
         public Radar()
         { 
-            
         }
 
         public override void LoadContent()
@@ -45,7 +42,7 @@ namespace thegame
             imageCenter = new Vector2(radarLayer.Width * 0.5f, radarLayer.Height * 0.5f);
         }
 
-        public override void Update(GameTime gameTime)
+        public override  void Update(GameTime gameTime)
         {
             differanceVect = new Vector2(Game1.getInstance().getEnemy().getPos().X - Game1.getInstance().getPlayer().getPos().X, Game1.getInstance().getEnemy().getPos().Z - Game1.getInstance().getPlayer().getPos().Z);
             float distance = differanceVect.LengthSquared();
@@ -66,7 +63,7 @@ namespace thegame
             base.Update(gameTime);
         }
 
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             Game1.getInstance().getSpriteBatch().Draw(radarLayer, radarCenterPos, null, Color.White, 0.0f, imageCenter, radarScreenRadius / (radarLayer.Height * 0.5f), SpriteEffects.None, 0.0f);
             if (Game1.getInstance().getEnemy().isAlive())

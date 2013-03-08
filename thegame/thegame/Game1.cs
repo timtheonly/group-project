@@ -28,6 +28,7 @@ namespace thegame
 
         private KeyboardState lastKeyState;
         private GamePadState lastpadState;
+        public Song BackgroundSong;
 
         private int level = 1;
         private int v = 1;
@@ -121,15 +122,14 @@ namespace thegame
             enemy = new Enemy(new Vector3(0, -3f, -30));
             plyr = new Player(new Vector3(0,0,50));
             radar = new Radar();
-            //boom = new Explosion(new Vector3(0,0,-10));
 
             //obstacles spawn in random locations
             Random rand = new Random();
 
-            for (int num = 0; num < 20; num++)
+            for (int num = 0; num < 50; num++)
             {
-                int x = rand.Next(-100, 500);
-                int z = rand.Next(-100, 500);
+                int x = rand.Next(-200, 400);
+                int z = rand.Next(-200, 400);
                 
                 //draw obstacle if it does not spawn on an enemy or the player
                 Obstacle tempObstacle = (new Obstacle(new Vector3(x, 0, z)));
@@ -174,6 +174,12 @@ namespace thegame
             levelMenu = Content.Load<Texture2D>("textures\\levelMenu");
             scoreSF = Content.Load<SpriteFont>("score");
             levelSF = Content.Load<SpriteFont>("level");
+
+
+            BackgroundSong = Content.Load<Song>("sounds\\MainGame");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(BackgroundSong);
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -232,6 +238,7 @@ namespace thegame
                 case ScreenState.Play:
                     {
                         waitForKeyPress();
+
                         if (!plyr.isAlive())
                         {
                             currentState = ScreenState.End;
