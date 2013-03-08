@@ -63,9 +63,8 @@ namespace thegame
                 Game1.getInstance().setBullet(tempBullet);
                 Shoot.Play();
                 lastShot = 0;
-                forward(3);
+                forward(4);
             }
-            
             
             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -102,7 +101,6 @@ namespace thegame
 
             if (dying)
             {
-                
                 pos -= up;
             }
 
