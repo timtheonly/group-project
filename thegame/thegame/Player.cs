@@ -139,7 +139,7 @@ namespace thegame
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
                     Crash.Play();
-
+                    //player cant drive through obstaclesgit 
                     collisionString = "collision: x: " + tempObstacle.getPos().X + " y: " + tempObstacle.getPos().Y + " Z: " + tempObstacle.getPos().Z;
                     if (currentState.ThumbSticks.Left.Y > 0 || keyState.IsKeyDown(Keys.Up))
                     {
@@ -195,7 +195,7 @@ namespace thegame
 
        public void Score(int value)
        {
-           score += 1000 * value;
+           score += 100 * value;
 
        }
 

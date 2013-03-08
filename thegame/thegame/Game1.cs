@@ -125,8 +125,8 @@ namespace thegame
 
             for (int num = 0; num < 100; num++)
             {
-                int x = rand.Next(-100, 500);
-                int z = rand.Next(-100, 500);
+                int x = rand.Next(-200, 400);
+                int z = rand.Next(-200, 400);
                 
                 //draw obstacle if it does not spawn on an enemy or the player
                 Obstacle tempObstacle = (new Obstacle(new Vector3(x, 0, z)));
