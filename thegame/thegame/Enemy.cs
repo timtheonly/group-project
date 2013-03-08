@@ -31,7 +31,6 @@ namespace thegame
             //Do NOT CHANGE spinX 
             spinX = 29.86f;
             spinY = 89.5f;
-            //spinZ = -50.0f;
             look = new Vector3(0,0,1);
             world = Matrix.Identity;
             
@@ -73,7 +72,6 @@ namespace thegame
 
            
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-
             world = Matrix.CreateScale(3.692f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY) * Matrix.CreateRotationZ(spinZ) *  Matrix.CreateWorld(pos, direction, up);
 
 
@@ -87,7 +85,6 @@ namespace thegame
                     Hit.Play();
                     if (health == 0)
                     {
-                        
                         EnemyDying.Play();
                         dying = true;
                     }

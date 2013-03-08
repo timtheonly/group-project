@@ -118,12 +118,11 @@ namespace thegame
             enemy = new Enemy(new Vector3(0, -3f, -30));
             plyr = new Player(new Vector3(0,0,50));
             radar = new Radar();
-            //boom = new Explosion(new Vector3(0,0,-10));
 
             //obstacles spawn in random locations
             Random rand = new Random();
 
-            for (int num = 0; num < 100; num++)
+            for (int num = 0; num < 50; num++)
             {
                 int x = rand.Next(-200, 400);
                 int z = rand.Next(-200, 400);
@@ -170,7 +169,7 @@ namespace thegame
             pauseMenu = Content.Load<Texture2D>("textures\\pauseMenu");
             scoreSF = Content.Load<SpriteFont>("score");
 
-            BackgroundSong = Content.Load<Song>("sounds\\Menu1");
+            BackgroundSong = Content.Load<Song>("sounds\\MainGame");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(BackgroundSong);
             // TODO: use this.Content to load your game content here
@@ -204,7 +203,6 @@ namespace thegame
                         if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Play;
-
                         }
                         ;
                         lastKeyState = currentKeyState;
@@ -217,7 +215,6 @@ namespace thegame
                         if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Play;
-
                         }
                         lastKeyState = currentKeyState;
                         lastpadState = currentPadState;
@@ -242,7 +239,7 @@ namespace thegame
                         {
                             currentState = ScreenState.Pause;
                         }
-                        BackgroundSong = Content.Load<Song>("sounds\\MainGame");
+                        
                         lastKeyState = currentKeyState;
                         lastpadState = currentPadState;
                         if (!plyr.isAlive())

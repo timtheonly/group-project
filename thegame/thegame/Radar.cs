@@ -18,8 +18,6 @@ namespace thegame
         private Texture2D enemyDot;
         private Texture2D radarLayer;
 
-
-
         // Distance that the radar can
         private const float radarRange = 500.0f;
         private const float radarRangeSquared = radarRange * radarRange;
@@ -32,7 +30,6 @@ namespace thegame
 
         public Radar()
         { 
-            
         }
 
         public override void LoadContent()
