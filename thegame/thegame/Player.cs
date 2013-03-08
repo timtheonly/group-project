@@ -49,6 +49,7 @@ namespace thegame
             this.pos = pos;
             health = 8;
             hitCount = 0;
+            score = 0;
             bs = new BoundingSphere(pos, 2f);
         }
 
@@ -120,10 +121,14 @@ namespace thegame
                 if (collidesWith(tempBullet.getBoundingSphere(), tempBullet.getWorld()) && tempBullet.getCreator() is Enemy)
                 {
                     GettingHit.Play();
-                    alive = false;
+                    
                     tempBullet.setAlive(false);
                     hitCount++;
                     health --;
+                    if (health <= 0)
+                    {
+                        alive = false;
+                    }
                 }
             }
 
@@ -197,6 +202,11 @@ namespace thegame
        public int getScore()
        {
            return score; 
+       }
+
+       public void resetScore()
+       {
+           score = 0;
        }
 
 

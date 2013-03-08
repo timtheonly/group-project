@@ -63,7 +63,7 @@ namespace thegame
                 Game1.getInstance().setBullet(tempBullet);
                 Shoot.Play();
                 lastShot = 0;
-                forward(2);
+                forward(3);
             }
             
             

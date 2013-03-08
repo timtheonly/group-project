@@ -23,6 +23,8 @@ namespace thegame
         private Texture2D pauseMenu;
         private Texture2D endMenu;
         private SpriteFont scoreSF;
+        private KeyboardState lastKeyState;
+        private GamePadState lastpadState;
 
         private int level = 1;
         private int v = 1;
@@ -134,6 +136,8 @@ namespace thegame
             }
 
             currentState = ScreenState.Start;
+            lastKeyState = Keyboard.GetState();
+            lastpadState = GamePad.GetState(PlayerIndex.One);
             base.Initialize();
         }
 
@@ -186,43 +190,57 @@ namespace thegame
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-
+            KeyboardState currentKeyState = Keyboard.GetState();
+            GamePadState  currentPadState = GamePad.GetState(PlayerIndex.One);
             switch (currentState)
             {
                 case ScreenState.Start:
                     {
-                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Play;
 
                         }
-                        
+                        lastKeyState = currentKeyState;
+                        lastpadState = currentPadState;
                         break;
                     }
 
                 case ScreenState.Pause:
                     {
-                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Play;
+
                         }
+                        lastKeyState = currentKeyState;
+                        lastpadState = currentPadState;
                         break;
                     }
                 case ScreenState.End:
                     {
-                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Start;
                             level = 1;
                             plyr = new Player(new Vector3(0, 0, 50));
+                            plyr.LoadContent();
                         }
+                        lastKeyState = currentKeyState;
+                        lastpadState = currentPadState;
                         break;
                     }
                 case ScreenState.Play:
                     {
-                        if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.P))
+                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Pause;
+                        }
+                        lastKeyState = currentKeyState;
+                        lastpadState = currentPadState;
+                        if (!plyr.isAlive())
+                        {
+                            currentState = ScreenState.End;
                         }
                         if (enemy.isAlive())
                         {
