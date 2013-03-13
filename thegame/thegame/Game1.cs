@@ -231,14 +231,19 @@ namespace thegame
                             plyr = new Player(new Vector3(0, 0, 50));
                             plyr.LoadContent();
                         }
+                        
                         lastKeyState = currentKeyState;
                         lastpadState = currentPadState;
                         break;
                     }
                 case ScreenState.Play:
                     {
-                        waitForKeyPress();
-
+                        if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
+                        {
+                            currentState = ScreenState.Pause;
+                        }
+                        lastKeyState = currentKeyState;
+                        lastpadState = currentPadState;
                         if (!plyr.isAlive())
                         {
                             currentState = ScreenState.End;
@@ -264,21 +269,21 @@ namespace thegame
                             {
                                 currentState = ScreenState.Level;
                                 v = 2;
-                                if (plyr.health > 0)
+                                if (plyr.health > 0 && plyr.health <= 6)
                                 {
                                     v = plyr.health + v;
                                 }
-                                enemy.health += 3;
+                                enemy.health ++;
                             }
                             if (level == 3)
                             {
                                 currentState = ScreenState.Level;
                                 v = 4;
-                                if (plyr.health > 0)
+                                if (plyr.health > 0 && plyr.health <=6)
                                 {
                                     v = plyr.health + v;
                                 }
-                                enemy.health += 3;
+                                enemy.health ++;
                             }
                             if (level > 3)
                             {

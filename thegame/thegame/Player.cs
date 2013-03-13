@@ -31,6 +31,8 @@ namespace thegame
         Texture2D healthlayer1,healthlayer2,healthlayer3;
 
         private String collisionString ="";
+
+        int dam = 1; 
         
         private Matrix projection;
         public Matrix getProjection()
@@ -124,7 +126,7 @@ namespace thegame
                     
                     tempBullet.setAlive(false);
                     hitCount++;
-                    health --;
+                    health -=2;
                     if (health <= 0)
                     {
                         alive = false;

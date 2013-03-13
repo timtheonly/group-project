@@ -114,7 +114,7 @@ namespace thegame
             //check for collisions with player
             if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()))
             {
-                alive = false;
+                backward(50);
             }
         }
         int timesShown = 0;
