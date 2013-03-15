@@ -22,11 +22,15 @@ namespace thegame
         private const float radarRange = 500.0f;
         private const float radarRangeSquared = radarRange * radarRange;
 
+		private float rotation;
+
         private const float radarScreenRadius = 61.0f;
         private static Vector2 radarCenterPos = new Vector2(700, 400);
         private Vector2 playerPos;
+		private Vector2 playerLook;
         private Vector2 imageCenter;
         private Vector2 differanceVect;
+		private Vector2 playerCenter;
 
         public Radar()
         { 
@@ -38,12 +42,13 @@ namespace thegame
             playerDot = Game1.getInstance().Content.Load<Texture2D>("textures\\playerLoc");
             enemyDot = Game1.getInstance().Content.Load<Texture2D>("textures\\enemyLoc");
             base.LoadContent();
-
+			playerCenter = new Vector2(playerDot.Width *0.5f,playerDot.Height *0.5f);
             imageCenter = new Vector2(radarLayer.Width * 0.5f, radarLayer.Height * 0.5f);
         }
 
-        public override  void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Vector3 look)
         {
+			playerLook = new Vector2(look.X,look.Y);
             differanceVect = new Vector2(Game1.getInstance().getEnemy().getPos().X - Game1.getInstance().getPlayer().getPos().X, Game1.getInstance().getEnemy().getPos().Z - Game1.getInstance().getPlayer().getPos().Z);
             float distance = differanceVect.LengthSquared();
             if (distance < radarRangeSquared)
@@ -52,14 +57,16 @@ namespace thegame
                 differanceVect *= radarScreenRadius / radarRange;
 
                 // We rotate each point on the radar so that the player is always facing UP on the radar
-               differanceVect = Vector2.Transform(differanceVect, Matrix.CreateRotationZ(MathHelper.ToRadians(0)));
+               	differanceVect = Vector2.Transform(differanceVect, Matrix.CreateRotationZ(MathHelper.ToRadians(0)));
 
                 // Offset coords from radar's center
                 differanceVect += radarCenterPos;
                 playerPos = new Vector2(Game1.getInstance().getPlayer().getPos().X, Game1.getInstance().getPlayer().getPos().Z);
                 playerPos *= radarScreenRadius / radarRange;
                 playerPos += radarCenterPos;
+				//playerLook *= radarScreenRadius / radarRange;
             }
+			rotation =-(float)Math.Atan2(look.X,look.Y);
             base.Update(gameTime);
         }
 
@@ -70,8 +77,7 @@ namespace thegame
             {
                 Game1.getInstance().getSpriteBatch().Draw(enemyDot, new Vector2(differanceVect.X - (enemyDot.Width * 0.5f), differanceVect.Y - (enemyDot.Width * 0.5f)), null, Color.White, 0.0f, new Vector2(0.0f, 0.0f), 1.0f, SpriteEffects.None, 0.0f);
             }
-            Game1.getInstance().getSpriteBatch().Draw(playerDot, new Vector2((playerPos.X)-(playerDot.Width *0.5f),playerPos.Y-(playerDot.Width *0.5f)), Color.White);
-            //base.Draw(gameTime);
+			Game1.getInstance().getSpriteBatch().Draw(playerDot, playerPos,null,Color.White,rotation,playerCenter,1,SpriteEffects.None,1);
         } 
     }
 }
