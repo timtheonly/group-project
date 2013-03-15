@@ -41,14 +41,19 @@ namespace thegame
             radarLayer = Game1.getInstance().Content.Load<Texture2D>("textures\\radar");
             playerDot = Game1.getInstance().Content.Load<Texture2D>("textures\\playerLoc");
             enemyDot = Game1.getInstance().Content.Load<Texture2D>("textures\\enemyLoc");
-            base.LoadContent();
+
+			//get the center of the images
 			playerCenter = new Vector2(playerDot.Width *0.5f,playerDot.Height *0.5f);
             imageCenter = new Vector2(radarLayer.Width * 0.5f, radarLayer.Height * 0.5f);
+            base.LoadContent();
+
+
         }
 
         public void Update(GameTime gameTime, Vector3 look)
         {
-			playerLook = new Vector2(look.X,look.Y);
+			//transform the 3d vectors to 2d vectors
+			playerLook = new Vector2(-look.X,-look.Z);
             differanceVect = new Vector2(Game1.getInstance().getEnemy().getPos().X - Game1.getInstance().getPlayer().getPos().X, Game1.getInstance().getEnemy().getPos().Z - Game1.getInstance().getPlayer().getPos().Z);
             float distance = differanceVect.LengthSquared();
             if (distance < radarRangeSquared)
@@ -64,9 +69,8 @@ namespace thegame
                 playerPos = new Vector2(Game1.getInstance().getPlayer().getPos().X, Game1.getInstance().getPlayer().getPos().Z);
                 playerPos *= radarScreenRadius / radarRange;
                 playerPos += radarCenterPos;
-				//playerLook *= radarScreenRadius / radarRange;
             }
-			rotation =-(float)Math.Atan2(look.X,look.Y);
+			rotation = -(float)Math.Atan2(playerLook.X,playerLook.Y);
             base.Update(gameTime);
         }
 
