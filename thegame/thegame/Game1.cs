@@ -293,7 +293,7 @@ namespace thegame
 
 
                         // TODO: Add your update logic here
-                        radar.Update(gameTime);
+                        radar.Update(gameTime, plyr.Look());
                         plyr.Update(gameTime);
                         for (int i = 0; i < _bullets.Count; i++)
                         {
