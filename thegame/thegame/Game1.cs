@@ -139,7 +139,11 @@ namespace thegame
                 }
             }
 
+#if DEBUG
+            currentState = ScreenState.Play;
+#else
             currentState = ScreenState.Start;
+#endif
             lastKeyState = Keyboard.GetState();
             lastpadState = GamePad.GetState(PlayerIndex.One);
             base.Initialize();
@@ -175,11 +179,11 @@ namespace thegame
             scoreSF = Content.Load<SpriteFont>("score");
             levelSF = Content.Load<SpriteFont>("level");
 
-
+            #if !DEBUG
             BackgroundSong = Content.Load<Song>("sounds\\MainGame");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(BackgroundSong);
-
+            #endif
             // TODO: use this.Content to load your game content here
         }
 
@@ -293,7 +297,7 @@ namespace thegame
 
 
                         // TODO: Add your update logic here
-                        radar.Update(gameTime);
+                        radar.Update(gameTime, plyr.Look());
                         plyr.Update(gameTime);
                         for (int i = 0; i < _bullets.Count; i++)
                         {

@@ -55,25 +55,24 @@ namespace thegame
         {
             Vector3 direction = Game1.getInstance().getPlayer().getPos() - pos;
             direction.Normalize();
-            if (lastShot > 2f && !dying)
-            {
-                //add offset to bullet to position it near the barrell of the tank
-                Bullet tempBullet = new Bullet(this, pos + (world.Left *-9.5f)+ (world.Forward * -22), (Game1.getInstance().getPlayer().Look()) * -1);
-                tempBullet.LoadContent();
-                Game1.getInstance().setBullet(tempBullet);
-                Shoot.Play();
-                lastShot = 0;
-            }
+            //if (lastShot > 2f && !dying)
+            //{
+            //    //add offset to bullet to position it near the barrell of the tank
+            //    Bullet tempBullet = new Bullet(this, pos, direction);
+            //    tempBullet.LoadContent();
+            //    Game1.getInstance().setBullet(tempBullet);
+            //    Shoot.Play();
+            //    lastShot = 0;
+            //}
             
             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
             spinY = (float)Math.Atan2(direction.X,direction.Z);
             //center the bounding sphere on the tanks position
             bs.Center = pos;
-
+            
            
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
             world = Matrix.CreateScale(1f,0.2f,5.5f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
-
 
             //check for collisions with bullets
             for (int i = 0; i < Game1.getInstance().getNumBullets(); i++)

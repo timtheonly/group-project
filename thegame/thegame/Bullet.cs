@@ -14,6 +14,7 @@ namespace thegame
 {
      public class Bullet : MoveableEntity
     {
+         private float theta;
          public void setAlive(bool alive)
          {
              this.alive = alive;
@@ -24,17 +25,17 @@ namespace thegame
              return creator;
          }
 
-         public Bullet(MoveableEntity creator, Vector3 pos, Vector3 look)
+         public Bullet(MoveableEntity creator, Vector3 pos, Vector3 dir)
          {
                  if (creator is Bullet)
                  {
                      throw new BulletException();
                  }
-                 this.look = look;
+                 theta = (float)Math.Atan2(dir.X, dir.Z);
+                 this.look = dir;
                  this.creator = creator;
                  this.pos = pos;
                  spinY = MathHelper.ToRadians(180);
-                 bs.Radius *= 0.035f;
         }
 
          public override void LoadContent()
@@ -47,18 +48,20 @@ namespace thegame
                  else
                      bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
              }
+             bs.Radius = 100;
              base.LoadContent();
          }
 
          public override void Update(GameTime gameTime)
          {
-             forward(2);
+             pos += 2 * look;
              if (pos.Z < -100 || pos.Z > 500)
              {
                  alive = false;
              }
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-             world = Matrix.CreateScale(0.075f, 0.075f, 0.075f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
+             world = Matrix.CreateScale(0.075f) * Matrix.CreateRotationY(theta) * Matrix.CreateTranslation(pos);
+             
              base.Update(gameTime);
          }
 
