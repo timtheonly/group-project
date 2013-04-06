@@ -48,7 +48,7 @@ namespace thegame
                  else
                      bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
              }
-             bs.Radius = 100;
+             bs.Radius = 0.25f;
              base.LoadContent();
          }
 
@@ -59,6 +59,7 @@ namespace thegame
              {
                  alive = false;
              }
+             bs.Center = pos +(world.Right *3);
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
              world = Matrix.CreateScale(0.075f) * Matrix.CreateRotationY(theta) * Matrix.CreateTranslation(pos);
              
@@ -67,6 +68,7 @@ namespace thegame
 
          public override void Draw(GameTime gameTime)
          {
+             BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(), Color.Red);
              base.Draw(gameTime);
          }
         

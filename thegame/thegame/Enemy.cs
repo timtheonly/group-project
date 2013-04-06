@@ -47,7 +47,7 @@ namespace thegame
                 else
                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
             }
-            bs.Radius = 3.5f;
+            bs.Radius = 7f;
             base.LoadContent();
         }
 
@@ -68,11 +68,12 @@ namespace thegame
             lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
             spinY = (float)Math.Atan2(direction.X,direction.Z);
             //center the bounding sphere on the tanks position
-            bs.Center = pos;
             
            
             //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
             world = Matrix.CreateScale(1f,0.2f,5.5f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
+
+            bs.Center = pos + (world.Left * 5);
 
             //check for collisions with bullets
             for (int i = 0; i < Game1.getInstance().getNumBullets(); i++)
@@ -119,7 +120,7 @@ namespace thegame
         int timesShown = 0;
         public override void Draw(GameTime gameTime)
         {
-            
+            BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(),Color.Red);
             if(dying)
             {
                 timesShown++;
