@@ -90,11 +90,11 @@ namespace thegame
                         currentPoint = 0;
                     }
                 }
+                lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 
             }
-            lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(1f,0.2f,5.5f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
+            
+            
             
             
             //center the bounding sphere on the tanks position
@@ -132,15 +132,23 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    backward(1.0f);
+                    pos -= direction;
+                    spinY = 45;
+                    direction.X = (float)Math.Sqrt(2)/2;
+                    direction.Z = (float)Math.Sqrt(2) / 2;
+
+                    pos += direction;
                 }
             }
 
             //check for collisions with player
             if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()))
             {
-                backward(50);
+                pos -= direction;
             }
+
+            //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
+            world = Matrix.CreateScale(1f, 0.2f, 5.5f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
         }
         int timesDeathShown = 0;
         public override void Draw(GameTime gameTime)
