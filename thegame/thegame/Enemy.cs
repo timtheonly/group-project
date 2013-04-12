@@ -41,6 +41,9 @@ namespace thegame
             pathPoints = new List<Vector3>();
             pathPoints.Add(new Vector3(60f,0f,-60f));
             pathPoints.Add(new Vector3(20f, 0f, -65f));
+            //TESTING Added to new paths
+            pathPoints.Add(new Vector3(120f, 0f, -40f));
+            pathPoints.Add(new Vector3(90f, 0f, -75f));
         }
 
         public override void LoadContent()
@@ -66,14 +69,15 @@ namespace thegame
             if (distance > 5)
             {
                 spinY = (float)Math.Atan2(direction.X, direction.Z);
-                pos += direction*0.5f;
+                pos += direction* 0.55f;
             }
             else
             {
                 direction = Game1.getInstance().getPlayer().getPos() - pos;
                 direction.Normalize();
                 spinY = (float)Math.Atan2(direction.X, direction.Z);
-                if (lastShot > 3.5f && !dying)
+                //TESTING Changed lastshot was 3.5 now 2
+                if (lastShot > 2.0f && !dying)
                 {
                     //add offset to bullet to position it near the barrell of the tank
                     Bullet tempBullet = new Bullet(this, pos, direction);
@@ -123,7 +127,8 @@ namespace thegame
 
             if (dying)
             {
-                pos -= up;
+                //TESTING Change multiplier was null
+                pos -= up * 2;
             }
 
             //check for collisions with obstacles
