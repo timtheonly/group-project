@@ -34,7 +34,8 @@ namespace thegame
                 else
                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
             }
-            bs.Radius = 2f;
+            bs.Radius = 5f;
+            bs.Center = pos;
         }
 
         public override void Update(GameTime gameTime)
@@ -57,6 +58,7 @@ namespace thegame
         public override void Draw(GameTime gameTime)
         {
             world = Matrix.CreateScale(5.961f, 5.961f, 5.961f) * Matrix.CreateTranslation(pos);
+            BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(), Color.Blue);
             base.Draw(gameTime);
         }
     }

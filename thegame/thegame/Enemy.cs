@@ -20,10 +20,15 @@ namespace thegame
 {
     public  class Enemy : MoveableEntity
     {
-        float lastShot=  0.0f;
+        private float lastShot=  0.0f;
+        
         
         bool dying = false;
         
+        //path stuff
+        List<Vector3> pathPoints;
+        int currentPoint =0;
+
         public Enemy(Vector3 pos):base()
         {
             health = 3;
@@ -33,7 +38,9 @@ namespace thegame
             spinY = 89.5f;
             look = new Vector3(0,0,1);
             world = Matrix.Identity;
-            
+            pathPoints = new List<Vector3>();
+            pathPoints.Add(new Vector3(60f,0f,-60f));
+            pathPoints.Add(new Vector3(20f, 0f, -65f));
         }
 
         public override void LoadContent()
@@ -46,34 +53,52 @@ namespace thegame
                 else
                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
             }
-            bs.Radius = 3.5f;
+            bs.Radius = 7f;
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
-        {
-            Vector3 direction = Game1.getInstance().getPlayer().getPos() - pos;
+        {     
+            Vector3 direction = pathPoints[currentPoint] - pos;
+            float distance = direction.LengthSquared();
             direction.Normalize();
-            if (lastShot > 2f && !dying)
+
+            if (distance > 5)
             {
-                //add offset to bullet to position it near the barrell of the tank
-                Bullet tempBullet = new Bullet(this, pos + (world.Left *-9.5f)+ (world.Forward * -22), (Game1.getInstance().getPlayer().Look()) * -1);
-                tempBullet.LoadContent();
-                Game1.getInstance().setBullet(tempBullet);
-                Shoot.Play();
-                lastShot = 0;
-                forward(4);
+                spinY = (float)Math.Atan2(direction.X, direction.Z);
+                pos += direction*0.5f;
+            }
+            else
+            {
+                direction = Game1.getInstance().getPlayer().getPos() - pos;
+                direction.Normalize();
+                spinY = (float)Math.Atan2(direction.X, direction.Z);
+                if (lastShot > 3.5f && !dying)
+                {
+                    //add offset to bullet to position it near the barrell of the tank
+                    Bullet tempBullet = new Bullet(this, pos, direction);
+                    tempBullet.LoadContent();
+                    Game1.getInstance().setBullet(tempBullet);
+                    Shoot.Play();
+                    lastShot = 0;
+                    if (currentPoint < (pathPoints.Count - 1))
+                    {
+                        currentPoint++;
+                    }
+                    else 
+                    {
+                        currentPoint = 0;
+                    }
+                }
+                lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                
             }
             
-            lastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+            
+            
+            
             //center the bounding sphere on the tanks position
-            bs.Center = pos;
-
-           
-            //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
-            world = Matrix.CreateScale(3.692f, 0.753f, 0.078f) * Matrix.CreateRotationX(spinX) * Matrix.CreateRotationY(spinY) * Matrix.CreateRotationZ(spinZ) *  Matrix.CreateWorld(pos, direction, up);
-
+            bs.Center = pos + (world.Left * 5);
 
             //check for collisions with bullets
             for (int i = 0; i < Game1.getInstance().getNumBullets(); i++)
@@ -107,25 +132,33 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    backward(1.0f);
+                    pos -= direction;
+                    spinY = 45;
+                    direction.X = (float)Math.Sqrt(2)/2;
+                    direction.Z = (float)Math.Sqrt(2) / 2;
+
+                    pos += direction;
                 }
             }
 
             //check for collisions with player
             if (collidesWith(Game1.getInstance().getPlayer().getBoundingSphere(), Game1.getInstance().getPlayer().getWorld()))
             {
-                backward(50);
+                pos -= direction;
             }
+
+            //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
+            world = Matrix.CreateScale(1f, 0.2f, 5.5f) * Matrix.CreateRotationY(spinY) * Matrix.CreateTranslation(pos);
         }
-        int timesShown = 0;
+        int timesDeathShown = 0;
         public override void Draw(GameTime gameTime)
         {
-            
+            BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(),Color.Red);
             if(dying)
             {
-                timesShown++;
+                timesDeathShown++;
             }
-            if (timesShown > 100)
+            if (timesDeathShown > 100)
             {
                 alive = false;
             }

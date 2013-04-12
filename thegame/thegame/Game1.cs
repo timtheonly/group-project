@@ -1,3 +1,5 @@
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +127,7 @@ namespace thegame
 
             //obstacles spawn in random locations
             Random rand = new Random();
-
+#if !DEBUG_PATHS
             for (int num = 0; num < 50; num++)
             {
                 int x = rand.Next(-200, 400);
@@ -138,8 +140,13 @@ namespace thegame
                     _obstacles.Add(tempObstacle);
                 }
             }
+#endif
 
+#if DEBUG
+            currentState = ScreenState.Play;
+#else
             currentState = ScreenState.Start;
+#endif
             lastKeyState = Keyboard.GetState();
             lastpadState = GamePad.GetState(PlayerIndex.One);
             base.Initialize();
@@ -175,11 +182,11 @@ namespace thegame
             scoreSF = Content.Load<SpriteFont>("score");
             levelSF = Content.Load<SpriteFont>("level");
 
-
+            #if !DEBUG
             BackgroundSong = Content.Load<Song>("sounds\\MainGame");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(BackgroundSong);
-
+            #endif
             // TODO: use this.Content to load your game content here
         }
 
