@@ -130,7 +130,7 @@ namespace thegame
             for (int num = 0; num < 50; num++)
             {
                 /*TESTING - changed the coordinates of where obstacles can spawn. Made it a wider area so that they 
-                aren't as cramped together. Changed from (-300, 500) to (-300, 500) */
+                aren't as cramped together. Changed from (-200, 400) to (-300, 500) */
                 int x = rand.Next(-300, 500);
                 int z = rand.Next(-300, 500);
                 
