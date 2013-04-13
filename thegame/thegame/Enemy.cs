@@ -41,7 +41,6 @@ namespace thegame
             pathPoints = new List<Vector3>();
             pathPoints.Add(new Vector3(60f,0f,-60f));
             pathPoints.Add(new Vector3(20f, 0f, -65f));
-            //TESTING Added to new paths
             pathPoints.Add(new Vector3(120f, 0f, -40f));
             pathPoints.Add(new Vector3(90f, 0f, -75f));
         }
@@ -76,7 +75,6 @@ namespace thegame
                 direction = Game1.getInstance().getPlayer().getPos() - pos;
                 direction.Normalize();
                 spinY = (float)Math.Atan2(direction.X, direction.Z);
-                //TESTING Changed lastshot was 3.5 now 2
                 if (lastShot > 2.0f && !dying)
                 {
                     //add offset to bullet to position it near the barrell of the tank
@@ -127,7 +125,6 @@ namespace thegame
 
             if (dying)
             {
-                //TESTING Change multiplier was null
                 pos -= up * 2;
             }
 
@@ -137,7 +134,7 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    pos -= direction;
+                    pos -= direction *2;
                     spinY = 45;
                     direction.X = (float)Math.Sqrt(2)/2;
                     direction.Z = (float)Math.Sqrt(2) / 2;
@@ -158,7 +155,9 @@ namespace thegame
         int timesDeathShown = 0;
         public override void Draw(GameTime gameTime)
         {
+#if DEBUG
             BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(),Color.Red);
+#endif
             if(dying)
             {
                 timesDeathShown++;

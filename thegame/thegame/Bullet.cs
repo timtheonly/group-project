@@ -68,7 +68,9 @@ namespace thegame
 
          public override void Draw(GameTime gameTime)
          {
+             #if DEBUG
              BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(), Color.Red);
+             #endif
              base.Draw(gameTime);
          }
         

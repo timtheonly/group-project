@@ -58,7 +58,9 @@ namespace thegame
         public override void Draw(GameTime gameTime)
         {
             world = Matrix.CreateScale(5.961f, 5.961f, 5.961f) * Matrix.CreateTranslation(pos);
+            #if DEBUG
             BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(), Color.Blue);
+            #endif
             base.Draw(gameTime);
         }
     }

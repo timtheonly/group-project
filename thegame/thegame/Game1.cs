@@ -1,5 +1,3 @@
-
-#define DEBUG_PATHS
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,7 +125,7 @@ namespace thegame
 
             //obstacles spawn in random locations
             Random rand = new Random();
-#if !DEBUG_PATHS
+#if (!DEBUG_PATHS || !DEBUG )
             for (int num = 0; num < 50; num++)
             {
                 int x = rand.Next(-200, 400);

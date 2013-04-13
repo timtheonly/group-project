@@ -81,7 +81,7 @@ namespace thegame
 
         public bool collidesWith(BoundingSphere otherBS, Matrix otherWorld)
         {
-            if (bs.Intersects(otherBS.Transform(otherWorld)))
+            if (bs.Intersects(otherBS))
             {
                 return true;
             }
