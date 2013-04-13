@@ -120,7 +120,8 @@ namespace thegame
             _bullets = new List<Bullet>();
             _obstacles = new List<Obstacle>();
             enemy = new Enemy(new Vector3(0, -3f, -30));
-            plyr = new Player(new Vector3(0,0,50));
+            //TESTING - changed where the player starts off as it was a bit too close to the enemy tank. Changed from 50 to 120
+            plyr = new Player(new Vector3(0, 0, 120));
             radar = new Radar();
 
             //obstacles spawn in random locations
@@ -128,8 +129,10 @@ namespace thegame
 #if (!DEBUG_PATHS || !DEBUG )
             for (int num = 0; num < 50; num++)
             {
-                int x = rand.Next(-200, 400);
-                int z = rand.Next(-200, 400);
+                /*TESTING - changed the coordinates of where obstacles can spawn. Made it a wider area so that they 
+                aren't as cramped together. Changed from (-300, 500) to (-300, 500) */
+                int x = rand.Next(-300, 500);
+                int z = rand.Next(-300, 500);
                 
                 //draw obstacle if it does not spawn on an enemy or the player
                 Obstacle tempObstacle = (new Obstacle(new Vector3(x, 0, z)));
