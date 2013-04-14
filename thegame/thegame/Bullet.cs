@@ -59,7 +59,6 @@ namespace thegame
          public override void Update(GameTime gameTime)
          {
              pos += 2 * look;
-             //TESTING - changed pos.Z from "< -100" to "< -500" so that bullets won't dissapear when you travel across the game map
              if (pos.Z < -500 || pos.Z > 500)
              {
                  alive = false;
