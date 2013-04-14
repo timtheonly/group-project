@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * Bullet: class for bullet (both player and enemy)
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -1,7 +1,6 @@
 ﻿/*
  * enemy: class for the enemy 
  * 
- * update logic to be added
  */
 
 using System;
@@ -134,12 +133,14 @@ namespace thegame
                 Obstacle tempObstacle = Game1.getInstance().getObstacle(i);
                 if (collidesWith(tempObstacle.getBoundingSphere(), tempObstacle.getWorld()))
                 {
-                    pos -= direction *2;
-                    spinY = 45;
-                    direction.X = (float)Math.Sqrt(2)/2;
-                    direction.Z = (float)Math.Sqrt(2) / 2;
-
-                    pos += direction;
+                    if (currentPoint < (pathPoints.Count - 1))
+                    {
+                        currentPoint++;
+                    }
+                    else
+                    {
+                        currentPoint = 0;
+                    }
                 }
             }
 
@@ -155,9 +156,9 @@ namespace thegame
         int timesDeathShown = 0;
         public override void Draw(GameTime gameTime)
         {
-#if DEBUG
+            #if DEBUG
             BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(),Color.Red);
-#endif
+            #endif
             if(dying)
             {
                 timesDeathShown++;

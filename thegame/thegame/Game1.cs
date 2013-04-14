@@ -1,3 +1,4 @@
+#define DEBUG_PATHS
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,11 +134,15 @@ namespace thegame
                 
                 //draw obstacle if it does not spawn on an enemy or the player
                 Obstacle tempObstacle = (new Obstacle(new Vector3(x, 0, z)));
+                tempObstacle.LoadContent();
                 if (!tempObstacle.collidesWith(enemy.getBoundingSphere(), enemy.getWorld()) && !tempObstacle.collidesWith(plyr.getBoundingSphere(), plyr.getWorld()))
                 {
                     _obstacles.Add(tempObstacle);
                 }
             }
+#else
+            Obstacle tmp = new Obstacle(new Vector3(7,0,-65));
+            _obstacles.Add(tmp);
 #endif
 
 #if DEBUG
