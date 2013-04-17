@@ -31,8 +31,6 @@ namespace thegame
         Texture2D healthlayer1,healthlayer2,healthlayer3;
 
         private String collisionString ="";
-
-        int dam = 1; 
         
         private Matrix projection;
         public Matrix getProjection()
@@ -52,7 +50,7 @@ namespace thegame
             health = 8;
             hitCount = 0;
             score = 0;
-            bs = new BoundingSphere(pos, 2f);
+            bs = new BoundingSphere(pos, 5f);
         }
 
         public override void LoadContent()
@@ -162,6 +160,9 @@ namespace thegame
 
         public override void Draw(GameTime gameTime)
         {
+#if DEBUG
+            BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(), Color.Red);
+#endif
             if (health <= 6 && health >= 4)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer1, new Vector2(0, 0), Color.White);
@@ -175,9 +176,10 @@ namespace thegame
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer3, new Vector2(0, 0), Color.White);
             }
 
-            
+#if DEBUG
             Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "location: x: " + pos.X + " y: "+ pos.Y + "Z: " + pos.Z + "hit" + hitCount, new Vector2(0, 0), Color.White);
             Game1.getInstance().getSpriteBatch().DrawString(collisionSF, collisionString, new Vector2(0, 10), Color.White);
+#endif
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
 
             Game1.getInstance().getSpriteBatch().DrawString(scoreSF, "Score: " + score, new Vector2(570, 10), Color.Red);

@@ -34,7 +34,7 @@ namespace thegame
                 else
                     bs = BoundingSphere.CreateMerged(bs, mesh.BoundingSphere);
             }
-            bs.Radius = 5f;
+            bs.Radius = 5.75f;
             bs.Center = pos;
         }
 
