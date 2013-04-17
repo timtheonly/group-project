@@ -24,7 +24,7 @@ namespace thegame
         private Texture2D pauseMenu;
         private Texture2D endMenu;
         private Texture2D levelMenu;
-        private SpriteFont scoreSF;
+        private SpriteFont EndscoreSF;
         private SpriteFont levelSF;
 
         private KeyboardState lastKeyState;
@@ -183,7 +183,7 @@ namespace thegame
             endMenu = Content.Load<Texture2D>("textures\\endMenu");
             pauseMenu = Content.Load<Texture2D>("textures\\pauseMenu");
             levelMenu = Content.Load<Texture2D>("textures\\levelMenu");
-            scoreSF = Content.Load<SpriteFont>("score");
+            EndscoreSF = Content.Load<SpriteFont>("endScore");
             levelSF = Content.Load<SpriteFont>("level");
 
             #if !DEBUG
@@ -382,7 +382,7 @@ namespace thegame
                     {
                         spriteBatch.Begin();
                         spriteBatch.Draw(endMenu, new Vector2(0, 0), Color.White);
-                        spriteBatch.DrawString(scoreSF, "Score: " + plyr.getScore(), new Vector2(280, 250), Color.White);
+                        spriteBatch.DrawString(EndscoreSF, "Score: " + plyr.getScore(), new Vector2(280, 250), Color.White);
                         spriteBatch.End();
                         break;
                     }
