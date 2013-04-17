@@ -55,7 +55,7 @@ namespace thegame
 
         public override void LoadContent()
         {
-            scoreSF = Game1.getInstance().Content.Load<SpriteFont>("textures\\Score");
+            scoreSF = Game1.getInstance().Content.Load<SpriteFont>("Score");
             hitCountSF = Game1.getInstance().Content.Load<SpriteFont>("hitcount");
             collisionSF = Game1.getInstance().Content.Load<SpriteFont>("collision");
             layer = Game1.getInstance().Content.Load<Texture2D>("textures\\normalaim");
