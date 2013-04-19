@@ -211,8 +211,7 @@ namespace thegame
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                this.Exit();
+
             KeyboardState currentKeyState = Keyboard.GetState();
             GamePadState  currentPadState = GamePad.GetState(PlayerIndex.One);
             switch (currentState)
@@ -230,11 +229,15 @@ namespace thegame
 
                 case ScreenState.Pause:
                     {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                            this.Exit();
                         waitForKeyPress();
                         break;
                     }
                 case ScreenState.End:
                     {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                            this.Exit();
                         if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Start;
