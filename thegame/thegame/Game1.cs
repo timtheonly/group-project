@@ -107,6 +107,9 @@ namespace thegame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             instance = this;
+#if !DEBUG
+            graphics.IsFullScreen = true;
+#endif
         }
 
         /// <summary>
