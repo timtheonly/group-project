@@ -125,6 +125,7 @@ namespace thegame
                     tempBullet.setAlive(false);
                     hitCount++;
                     health -=2;
+                    Game1.getInstance().CheckForRumble(gameTime);
                     if (health <= 0)
                     {
                         alive = false;

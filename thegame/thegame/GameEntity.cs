@@ -30,10 +30,7 @@ namespace thegame
         }
         protected Vector3 pos;
         protected Model model;
-        public Model getModel()
-        {
-            return model;
-        }
+
 
         public Vector3 getPos()
         {

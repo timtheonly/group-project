@@ -26,7 +26,7 @@ namespace thegame
         private Texture2D levelMenu;
         private SpriteFont EndscoreSF;
         private SpriteFont levelSF;
-
+        private Color menuColor;
         private KeyboardState lastKeyState;
         private GamePadState lastpadState;
         public Song BackgroundSong;
@@ -93,11 +93,11 @@ namespace thegame
 
         enum ScreenState
         { 
-            Start,
-            End,
-            Pause,
-            Play,
-            Level
+            Start,//game just loaded
+            End,//game ended
+            Pause,//game paused
+            Play,//game playing 
+            Level//next level
         }
 
         ScreenState currentState;
@@ -107,6 +107,7 @@ namespace thegame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             instance = this;
+            menuColor = new Color(28,205,7);
 #if !DEBUG
             graphics.IsFullScreen = true;
 #endif
@@ -214,8 +215,7 @@ namespace thegame
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                this.Exit();
+           
             KeyboardState currentKeyState = Keyboard.GetState();
             GamePadState  currentPadState = GamePad.GetState(PlayerIndex.One);
             switch (currentState)
@@ -233,11 +233,16 @@ namespace thegame
 
                 case ScreenState.Pause:
                     {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                            this.Exit();
                         waitForKeyPress();
+
                         break;
                     }
                 case ScreenState.End:
                     {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                            this.Exit();
                         if ((GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || currentKeyState.IsKeyDown(Keys.P)) && (lastKeyState.IsKeyUp(Keys.P) && lastpadState.IsButtonUp(Buttons.Start)))
                         {
                             currentState = ScreenState.Start;
@@ -385,7 +390,7 @@ namespace thegame
                     {
                         spriteBatch.Begin();
                         spriteBatch.Draw(endMenu, new Vector2(0, 0), Color.White);
-                        spriteBatch.DrawString(EndscoreSF, "Score: " + plyr.getScore(), new Vector2(280, 250), Color.White);
+                        spriteBatch.DrawString(EndscoreSF, "Score: " + plyr.getScore(), new Vector2(280, 250), menuColor);
                         spriteBatch.End();
                         break;
                     }
@@ -402,7 +407,7 @@ namespace thegame
                     {
                         spriteBatch.Begin();
                         spriteBatch.Draw(levelMenu, new Vector2(0, 0), Color.White);
-                        spriteBatch.DrawString(levelSF, ""+level, new Vector2(350, 85), Color.White);
+                        spriteBatch.DrawString(levelSF, ""+level, new Vector2(350, 85), menuColor);
                         spriteBatch.End();
                         break;
                     
@@ -423,6 +428,16 @@ namespace thegame
             }
             lastKeyState = currentKeyState;
             lastpadState = currentPadState;
+        }
+
+
+
+        public void CheckForRumble(GameTime gameTime) {
+
+          GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
+          System.Threading.Thread.Sleep(100);
+          GamePad.SetVibration(PlayerIndex.One, 0.0f, 0.0f);
+
         }
     }
 }
