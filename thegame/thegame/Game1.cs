@@ -215,7 +215,7 @@ namespace thegame
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-           
+
             KeyboardState currentKeyState = Keyboard.GetState();
             GamePadState  currentPadState = GamePad.GetState(PlayerIndex.One);
             switch (currentState)
@@ -227,6 +227,8 @@ namespace thegame
                     }
                 case ScreenState.Start:
                     {
+                        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                            this.Exit();
                         waitForKeyPress();
                         break;
                     }
@@ -249,7 +251,7 @@ namespace thegame
                             level = 1;
                             plyr = new Player(new Vector3(0, 0, 50));
                             plyr.LoadContent();
-                        }
+                        } 
                         
                         lastKeyState = currentKeyState;
                         lastpadState = currentPadState;

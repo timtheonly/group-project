@@ -50,7 +50,7 @@ namespace thegame
             health = 8;
             hitCount = 0;
             score = 0;
-            bs = new BoundingSphere(pos, 5f);
+            bs = new BoundingSphere(pos, 2.5f);
         }
 
         public override void LoadContent()
