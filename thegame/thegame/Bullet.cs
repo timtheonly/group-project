@@ -63,7 +63,10 @@ namespace thegame
              {
                  alive = false;
              }
+
+             //center the bounding sphere on the model
              bs.Center = pos +(world.Right *3);
+
              //each model has a world matrix for scale rotation and translation  NB: Translation MUST BE LAST
              world = Matrix.CreateScale(0.075f) * Matrix.CreateRotationY(theta) * Matrix.CreateTranslation(pos);
              

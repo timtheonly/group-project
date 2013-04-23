@@ -78,6 +78,7 @@ namespace thegame
 
         public bool collidesWith(BoundingSphere otherBS, Matrix otherWorld)
         {
+            //if the bounding spheres intersect theres been a collision
             if (bs.Intersects(otherBS))
             {
                 return true;

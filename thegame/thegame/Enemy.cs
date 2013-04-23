@@ -32,7 +32,6 @@ namespace thegame
         {
             health = 3;
             this.pos = pos;
-            //Do NOT CHANGE spinX 
             spinX = 29.86f;
             spinY = 89.5f;
             look = new Vector3(0,0,1);

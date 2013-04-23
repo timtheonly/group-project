@@ -1,5 +1,6 @@
 ﻿/*
  *  player: camera class for point of view
+ *  FPS camera with yaw and forward and backward movement
  */
 
 using System;
@@ -30,6 +31,7 @@ namespace thegame
         Texture2D layer;
         Texture2D healthlayer1,healthlayer2,healthlayer3;
 
+        //for debugging collisions
         private String collisionString ="";
         
         private Matrix projection;
@@ -43,6 +45,35 @@ namespace thegame
         {
             return view;
         }
+        public Vector3 Look()
+        {
+            return look;
+        }
+
+        public float getYSpin()
+        {
+            return spinY;
+        }
+
+        protected static int score;
+
+        public void Score(int value)
+        {
+            score += 100 * value;
+
+        }
+
+        public int getScore()
+        {
+            return score;
+        }
+
+        public void resetScore()
+        {
+            score = 0;
+        }
+
+
         
         public Player(Vector3 pos)
         {
@@ -50,6 +81,8 @@ namespace thegame
             health = 8;
             hitCount = 0;
             score = 0;
+
+            //player dosent have a model so just give it a bounding sphere
             bs = new BoundingSphere(pos, 2.5f);
         }
 
@@ -99,6 +132,7 @@ namespace thegame
             {
                 //add offset to the bullet vector3 to center it in the crosshairs
                 Bullet tempBullet = new Bullet(this, new Vector3(pos.X+0.06f, pos.Y-0.12f, pos.Z-1.5f), look);
+                //load bullets loadcontent or it wont draw
                 tempBullet.LoadContent();
                 Game1.getInstance().setBullet(tempBullet);
                 lastShot = 0;
@@ -153,8 +187,11 @@ namespace thegame
                     }
                 }
             }
+            //end of collision detection
+
             view = Matrix.CreateLookAt(pos, pos + look, up);
             world = Matrix.Identity;
+
             //projection is the view space, anything out of this range is not drawn
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45.0f), Game1.getInstance().getGraphics().GraphicsDevice.Viewport.AspectRatio, 1.0f, 1000.0f);
         }
@@ -164,6 +201,7 @@ namespace thegame
 #if DEBUG
             BoundingSphereRenderer.Render(bs, Game1.getInstance().getGraphics().GraphicsDevice, Game1.getInstance().getPlayer().getView(), Game1.getInstance().getPlayer().getProjection(), Color.Red);
 #endif
+            //the layer that is drawn depends on the players health
             if (health <= 6 && health >= 4)
             {
                 Game1.getInstance().getSpriteBatch().Draw(healthlayer1, new Vector2(0, 0), Color.White);
@@ -181,40 +219,9 @@ namespace thegame
             Game1.getInstance().getSpriteBatch().DrawString(hitCountSF, "location: x: " + pos.X + " y: "+ pos.Y + "Z: " + pos.Z + "hit" + hitCount, new Vector2(0, 0), Color.White);
             Game1.getInstance().getSpriteBatch().DrawString(collisionSF, collisionString, new Vector2(0, 10), Color.White);
 #endif
+            //draw the crosshairs
             Game1.getInstance().getSpriteBatch().Draw(layer, new Vector2(0, -60), Color.White);
-
             Game1.getInstance().getSpriteBatch().DrawString(scoreSF, "Score: " + score, new Vector2(570, 10), Color.Red);
         }
-
-       public Vector3 Look()
-       {
-           return look;
-       }
-
-       public float getYSpin()
-       {
-           return spinY;
-       }
-
-       protected static int score;
-
-       public void Score(int value)
-       {
-           score += 100 * value;
-
-       }
-
-       public int getScore()
-       {
-           return score; 
-       }
-
-       public void resetScore()
-       {
-           score = 0;
-       }
-
-
-
     }
 }

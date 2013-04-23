@@ -18,10 +18,19 @@ namespace thegame
     public class MoveableEntity :GameEntity
     {
         protected Vector3 modelVelocity, up,right, look;
+        
+        //spins around the axis
         protected float spinX;
         protected float spinY;
         protected float spinZ;
+
         protected bool alive;
+
+        public bool isAlive()
+        {
+            return alive;
+        }
+
         protected int _health;
         public int health
         {
@@ -53,10 +62,6 @@ namespace thegame
         {
             Matrix T = Matrix.CreateRotationY(angle);
             look = Vector3.Transform(look, T);
-        }
-        public bool isAlive()
-        {
-            return alive;
         }
     }
 }
